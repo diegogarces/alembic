@@ -73,4 +73,6 @@
 #include <Alembic/Abc/TypedArraySample.h>
 #include <Alembic/Abc/TypedPropertyTraits.h>
 
+#include <algorithm>
+
 #endif

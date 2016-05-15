@@ -1,0 +1,351 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug_2015|x64">
+      <Configuration>Debug_2015</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseDebug|x64">
+      <Configuration>ReleaseDebug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release_2015_1.0.3|x64">
+      <Configuration>Release_2015_1.0.3</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release_2015_latest|x64">
+      <Configuration>Release_2015_latest</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release_2015|x64">
+      <Configuration>Release_2015</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{88A0D217-4B9B-66FC-2AA0-60ACF390820B}</ProjectGuid>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_2015|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDebug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_2015|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_2015_latest|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_2015_1.0.3|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug_2015|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="gpuCache.props" Condition="exists('gpuCache.props')" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDebug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="gpuCache.props" Condition="exists('gpuCache.props')" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release_2015|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="gpuCache.props" Condition="exists('gpuCache.props')" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release_2015_latest|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="gpuCache.props" Condition="exists('gpuCache.props')" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release_2015_1.0.3|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="gpuCache.props" Condition="exists('gpuCache.props')" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_2015|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>O:\$(ProjectName)\$(Platform)\$(Configuration)\</OutDir>
+    <TargetExt>.mll</TargetExt>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <IntDir>O:\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_2015|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>_DEBUG;WIN32;_WINDOWS;_USRDLL;NT_PLUGIN;_HAS_ITERATOR_DEBUGGING=1;_SECURE_SCL=0;_SECURE_SCL_THROWS=0;_SECURE_SCL_DEPRECATE=0;_CRT_SECURE_NO_DEPRECATE;TBB_USE_DEBUG=0;__TBB_LIB_NAME=tbb.lib;REQUIRE_IOSTREAM;AW_NEW_IOSTREAMS;Bits64_;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(MAYA_2015_DEV_PATH)\include;.;..\..\lib;..\..\lib\Alembic;..\..\contrib\ilmbase-1.0.2\Half;..\..\contrib\ilmbase-1.0.2\Iex;..\..\contrib\ilmbase-1.0.2\Imath;..\..\contrib\maya2015-boost;..\contrib\zlib-1.2.8;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <ProgramDataBaseFileName>$(IntDir)$(ProjectName).pdb</ProgramDataBaseFileName>
+      <Optimization>Disabled</Optimization>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <AdditionalLibraryDirectories>$(MAYA_2015_DEV_PATH)\lib;..\..\Libs\hdf5;..\..\Libs\IlmBase;..\..\Libs\zlib;..\..\Libs\Alembic;..\..\Libs\szip;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>OpenMaya.lib;OpenMayaUI.lib;OpenMayaAnim.lib;OpenMayaRender.lib;Foundation.lib;opengl32.lib;AlembicAbcCoreFactoryd.lib;AlembicAbcCoreHDF5d.lib;AlembicAbcCoreOgawad.lib;AlembicAbcGeomd.lib;AlembicAbcd.lib;AlembicAbcCoreAbstractd.lib;AlembicAbcMateriald.lib;AlembicAbcCollectiond.lib;AlembicOgawad.lib;AlembicUtild.lib;hdf5_hld.lib;hdf5d.lib;Iexd.lib;Halfd.lib;Imathd.lib;libzlib.lib;wbemuuid.lib;tbb.lib;libszip.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>/export:initializePlugin /export:uninitializePlugin %(AdditionalOptions)</AdditionalOptions>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <ImportLibrary>$(OutDir)$(TargetName).lib</ImportLibrary>
+      <OutputFile>$(MAYA_2015_DEV_USER_PATH)\2015-x64\scripts\ilion_maya_framework\binary_plugins\$(ProjectName)\dev\$(ProjectName).mll</OutputFile>
+    </Link>
+    <PostBuildEvent>
+      <Command>mkdir "$(ProjectDir)"deploy\2015
+mkdir "$(MAYA_2015_DEV_USER_PATH)"\2015-x64\scripts\ilion_maya_framework\binary_plugins\$(ProjectName)\dev\mels
+echo f | xcopy /y /s "$(MAYA_2015_DEV_USER_PATH)"\2015-x64\scripts\ilion_maya_framework\binary_plugins\$(ProjectName)\dev\$(ProjectName).mll "$(ProjectDir)"deploy\2015\$(ProjectName)d.mll
+echo f | xcopy /y /s O:\$(ProjectName)\$(Platform)\$(Configuration)\$(ProjectName).pdb "$(MAYA_2015_DEV_USER_PATH)"\2015-x64\scripts\ilion_maya_framework\binary_plugins\$(ProjectName)\dev\$(ProjectName).pdb
+REM xcopy /y /s "$(ProjectDir)"deploy\mels\*.mel "$(MAYA_2015_DEV_USER_PATH)"\2015-x64\scripts\ilion_maya_framework\binary_plugins\$(ProjectName)\dev\mels</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDebug|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>O:\$(ProjectName)\$(Platform)\$(Configuration)\</OutDir>
+    <TargetExt>.mll</TargetExt>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <IntDir>O:\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDebug|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>NDEBUG;WIN32;_WINDOWS;_USRDLL;NT_PLUGIN;_HAS_ITERATOR_DEBUGGING=0;_SECURE_SCL=0;_SECURE_SCL_THROWS=0;_SECURE_SCL_DEPRECATE=0;_CRT_SECURE_NO_DEPRECATE;TBB_USE_DEBUG=0;__TBB_LIB_NAME=tbb.lib;REQUIRE_IOSTREAM;AW_NEW_IOSTREAMS;Bits64_;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>.;..\..\..\include;..\..\..\..\include;..\..\Alembic\include;..\..\Alembic\include\AlembicPrivate;..\..\Alembic\include\AlembicPrivate\OpenEXR;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <ProgramDataBaseFileName>$(IntDir)$(ProjectName).pdb</ProgramDataBaseFileName>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <StringPooling>true</StringPooling>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <AdditionalLibraryDirectories>..\..\..\lib;..\..\..\..\lib;..\..\Alembic\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>OpenMaya.lib;OpenMayaUI.lib;OpenMayaAnim.lib;OpenMayaRender.lib;Foundation.lib;opengl32.lib;AlembicAbcCoreFactory.lib;AlembicAbcCoreHDF5.lib;AlembicAbcCoreOgawa.lib;AlembicAbcGeom.lib;AlembicAbc.lib;AlembicAbcCoreAbstract.lib;AlembicAbcMaterial.lib;AlembicAbcCollection.lib;AlembicOgawa.lib;AlembicUtil.lib;hdf5_hl.lib;hdf5.lib;AlembicIex.lib;AlembicHalf.lib;AlembicImath.lib;libzlib.lib;wbemuuid.lib;tbb.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>/export:initializePlugin /export:uninitializePlugin %(AdditionalOptions)</AdditionalOptions>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <ImportLibrary>$(OutDir)$(TargetName).lib</ImportLibrary>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_2015|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>O:\$(ProjectName)\$(Platform)\$(Configuration)\</OutDir>
+    <TargetExt>.mll</TargetExt>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <IntDir>O:\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_2015_latest|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>O:\$(ProjectName)\$(Platform)\$(Configuration)\</OutDir>
+    <TargetExt>.mll</TargetExt>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <IntDir>O:\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_2015_1.0.3|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>O:\$(ProjectName)\$(Platform)\$(Configuration)\</OutDir>
+    <TargetExt>.mll</TargetExt>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <IntDir>O:\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_2015|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>NDEBUG;WIN32;_WINDOWS;_USRDLL;NT_PLUGIN;_HAS_ITERATOR_DEBUGGING=0;_SECURE_SCL=0;_SECURE_SCL_THROWS=0;_SECURE_SCL_DEPRECATE=0;_CRT_SECURE_NO_DEPRECATE;TBB_USE_DEBUG=0;__TBB_LIB_NAME=tbb.lib;REQUIRE_IOSTREAM;AW_NEW_IOSTREAMS;Bits64_;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(MAYA_2015_DEV_PATH)\include;.\gpuCache;..\lib;..\lib\Alembic;..\contrib\ilmbase-1.0.2\Half;..\contrib\ilmbase-1.0.2\Iex;..\contrib\ilmbase-1.0.2\Imath;..\contrib\maya2015-boost;..\contrib\zlib-1.2.8;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <ProgramDataBaseFileName>$(IntDir)$(ProjectName).pdb</ProgramDataBaseFileName>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <StringPooling>true</StringPooling>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <AdditionalLibraryDirectories>$(MAYA_2015_DEV_PATH)\lib;..\Libs\hdf5;..\Libs\IlmBase-1.0.2;..\Libs\zlib;..\Libs\Alembic;..\Libs\szip;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>OpenMaya.lib;OpenMayaUI.lib;OpenMayaAnim.lib;OpenMayaRender.lib;Foundation.lib;opengl32.lib;AlembicAbcCoreFactory.lib;AlembicAbcCoreHDF5.lib;AlembicAbcCoreOgawa.lib;AlembicAbcGeom.lib;AlembicAbc.lib;AlembicAbcCoreAbstract.lib;AlembicAbcMaterial.lib;AlembicAbcCollection.lib;AlembicOgawa.lib;AlembicUtil.lib;hdf5_hl.lib;hdf5.lib;Iex.lib;Half.lib;Imath.lib;libzlib.lib;wbemuuid.lib;tbb.lib;libszip.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>/export:initializePlugin /export:uninitializePlugin %(AdditionalOptions)</AdditionalOptions>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <ImportLibrary>$(OutDir)$(TargetName).lib</ImportLibrary>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <OutputFile>$(MAYA_2015_DEV_USER_PATH)\2015-x64\scripts\ilion_maya_framework\binary_plugins\$(ProjectName)\dev\$(ProjectName).mll</OutputFile>
+    </Link>
+    <PostBuildEvent>
+      <Command>mkdir "$(ProjectDir)"deploy\2015
+mkdir "$(MAYA_2015_DEV_USER_PATH)"\2015-x64\scripts\ilion_maya_framework\binary_plugins\$(ProjectName)\dev\mels
+echo f | xcopy /y /s "$(MAYA_2015_DEV_USER_PATH)"\2015-x64\scripts\ilion_maya_framework\binary_plugins\$(ProjectName)\dev\$(ProjectName).mll "$(ProjectDir)"\..\deploy\2015\$(ProjectName).mll
+REM xcopy /y /s "$(ProjectDir)"deploy\mels\*.mel "$(MAYA_2015_DEV_USER_PATH)"\2015-x64\scripts\ilion_maya_framework\binary_plugins\$(ProjectName)\dev\mels</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_2015_latest|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>NDEBUG;WIN32;_WINDOWS;_USRDLL;NT_PLUGIN;_HAS_ITERATOR_DEBUGGING=0;_SECURE_SCL=0;_SECURE_SCL_THROWS=0;_SECURE_SCL_DEPRECATE=0;_CRT_SECURE_NO_DEPRECATE;TBB_USE_DEBUG=0;__TBB_LIB_NAME=tbb.lib;REQUIRE_IOSTREAM;AW_NEW_IOSTREAMS;Bits64_;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(MAYA_2015_DEV_PATH)\include;.\gpuCache;..\lib;..\lib\Alembic;..\contrib\ilmbase-1.0.2\Half;..\contrib\ilmbase-1.0.2\Iex;..\contrib\ilmbase-1.0.2\Imath;..\contrib\maya2015-boost;..\contrib\zlib-1.2.8;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <ProgramDataBaseFileName>$(IntDir)$(ProjectName).pdb</ProgramDataBaseFileName>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <StringPooling>true</StringPooling>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <AdditionalLibraryDirectories>$(MAYA_2015_DEV_PATH)\lib;..\Libs\hdf5;..\Libs\IlmBase-1.0.2;..\Libs\zlib;..\Libs\Alembic;..\Libs\szip;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>OpenMaya.lib;OpenMayaUI.lib;OpenMayaAnim.lib;OpenMayaRender.lib;Foundation.lib;opengl32.lib;AlembicAbcCoreFactory.lib;AlembicAbcCoreHDF5.lib;AlembicAbcCoreOgawa.lib;AlembicAbcGeom.lib;AlembicAbc.lib;AlembicAbcCoreAbstract.lib;AlembicAbcMaterial.lib;AlembicAbcCollection.lib;AlembicOgawa.lib;AlembicUtil.lib;hdf5_hl.lib;hdf5.lib;Iex.lib;Half.lib;Imath.lib;libzlib.lib;wbemuuid.lib;tbb.lib;libszip.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>/export:initializePlugin /export:uninitializePlugin %(AdditionalOptions)</AdditionalOptions>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <ImportLibrary>$(OutDir)$(TargetName).lib</ImportLibrary>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <OutputFile>$(MAYA_2015_DEV_USER_PATH)\2015-x64\scripts\ilion_maya_framework\binary_plugins\$(ProjectName)\dev\$(ProjectName).mll</OutputFile>
+    </Link>
+    <PostBuildEvent>
+      <Command>mkdir "$(ProjectDir)"deploy\2015
+mkdir "$(MAYA_2015_DEV_USER_PATH)"\2015-x64\scripts\ilion_maya_framework\binary_plugins\$(ProjectName)\dev\mels
+echo f | xcopy /y /s "$(MAYA_2015_DEV_USER_PATH)"\2015-x64\scripts\ilion_maya_framework\binary_plugins\$(ProjectName)\dev\$(ProjectName).mll "$(ProjectDir)"\..\deploy\2015\$(ProjectName).mll
+REM xcopy /y /s "$(ProjectDir)"deploy\mels\*.mel "$(MAYA_2015_DEV_USER_PATH)"\2015-x64\scripts\ilion_maya_framework\binary_plugins\$(ProjectName)\dev\mels</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_2015_1.0.3|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>NDEBUG;WIN32;_WINDOWS;_USRDLL;NT_PLUGIN;_HAS_ITERATOR_DEBUGGING=0;_SECURE_SCL=0;_SECURE_SCL_THROWS=0;_SECURE_SCL_DEPRECATE=0;_CRT_SECURE_NO_DEPRECATE;TBB_USE_DEBUG=0;__TBB_LIB_NAME=tbb.lib;REQUIRE_IOSTREAM;AW_NEW_IOSTREAMS;Bits64_;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(MAYA_2015_DEV_PATH)\include;.\gpuCache;..\lib;..\lib\Alembic;..\contrib\ilmbase-1.0.2\Half;..\contrib\ilmbase-1.0.2\Iex;..\contrib\ilmbase-1.0.2\Imath;..\contrib\maya2015-boost;..\contrib\zlib-1.2.8;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <ProgramDataBaseFileName>$(IntDir)$(ProjectName).pdb</ProgramDataBaseFileName>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <StringPooling>true</StringPooling>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <AdditionalLibraryDirectories>$(MAYA_2015_DEV_PATH)\lib;..\Libs\hdf5;..\Libs\IlmBase-1.0.2;..\Libs\zlib;..\Libs\Alembic;..\Libs\szip;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>OpenMaya.lib;OpenMayaUI.lib;OpenMayaAnim.lib;OpenMayaRender.lib;Foundation.lib;opengl32.lib;AlembicAbcCoreFactory.lib;AlembicAbcCoreHDF5.lib;AlembicAbcCoreOgawa.lib;AlembicAbcGeom.lib;AlembicAbc.lib;AlembicAbcCoreAbstract.lib;AlembicAbcMaterial.lib;AlembicAbcCollection.lib;AlembicOgawa.lib;AlembicUtil.lib;hdf5_hl.lib;hdf5.lib;Iex.lib;Half.lib;Imath.lib;libzlib.lib;wbemuuid.lib;tbb.lib;libszip.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>/export:initializePlugin /export:uninitializePlugin %(AdditionalOptions)</AdditionalOptions>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <ImportLibrary>$(OutDir)$(TargetName).lib</ImportLibrary>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <OutputFile>$(MAYA_2015_DEV_USER_PATH)\2015-x64\scripts\ilion_maya_framework\binary_plugins\$(ProjectName)\dev\$(ProjectName).mll</OutputFile>
+    </Link>
+    <PostBuildEvent>
+      <Command>mkdir "$(ProjectDir)"deploy\2015
+mkdir "$(MAYA_2015_DEV_USER_PATH)"\2015-x64\scripts\ilion_maya_framework\binary_plugins\$(ProjectName)\dev\mels
+echo f | xcopy /y /s "$(MAYA_2015_DEV_USER_PATH)"\2015-x64\scripts\ilion_maya_framework\binary_plugins\$(ProjectName)\dev\$(ProjectName).mll "$(ProjectDir)"\..\deploy\2015\$(ProjectName).mll
+REM xcopy /y /s "$(ProjectDir)"deploy\mels\*.mel "$(MAYA_2015_DEV_USER_PATH)"\2015-x64\scripts\ilion_maya_framework\binary_plugins\$(ProjectName)\dev\mels</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="gpuCache\CacheAlembicUtil.h" />
+    <ClInclude Include="gpuCache\CacheReader.h" />
+    <ClInclude Include="gpuCache\CacheReaderAlembic.h" />
+    <ClInclude Include="gpuCache\CacheWriter.h" />
+    <ClInclude Include="gpuCache\CacheWriterAlembic.h" />
+    <ClInclude Include="gpuCache\gpuCacheCmd.h" />
+    <ClInclude Include="gpuCache\gpuCacheConfig.h" />
+    <ClInclude Include="gpuCache\gpuCacheDrawOverride.h" />
+    <ClInclude Include="gpuCache\gpuCacheDrawTraversal.h" />
+    <ClInclude Include="gpuCache\gpuCacheFrustum.h" />
+    <ClInclude Include="gpuCache\gpuCacheGeometry.h" />
+    <ClInclude Include="gpuCache\gpuCacheGLFT.h" />
+    <ClInclude Include="gpuCache\gpuCacheGLPickingSelect.h" />
+    <ClInclude Include="gpuCache\gpuCacheIsectUtil.h" />
+    <ClInclude Include="gpuCache\gpuCacheMakeSharedHelper.h" />
+    <ClInclude Include="gpuCache\gpuCacheMaterial.h" />
+    <ClInclude Include="gpuCache\gpuCacheMaterialBakers.h" />
+    <ClInclude Include="gpuCache\gpuCacheMaterialNodes.h" />
+    <ClInclude Include="gpuCache\gpuCacheRasterSelect.h" />
+    <ClInclude Include="gpuCache\gpuCacheSample.h" />
+    <ClInclude Include="gpuCache\gpuCacheSelect.h" />
+    <ClInclude Include="gpuCache\gpuCacheShapeNode.h" />
+    <ClInclude Include="gpuCache\gpuCacheSpatialGrid.h" />
+    <ClInclude Include="gpuCache\gpuCacheSpatialGridWalker.h" />
+    <ClInclude Include="gpuCache\gpuCacheSpatialSubdivision.h" />
+    <ClInclude Include="gpuCache\gpuCacheStrings.h" />
+    <ClInclude Include="gpuCache\gpuCacheSubSceneOverride.h" />
+    <ClInclude Include="gpuCache\gpuCacheTimeInterval.h" />
+    <ClInclude Include="gpuCache\gpuCacheUnitBoundingBox.h" />
+    <ClInclude Include="gpuCache\gpuCacheUtil.h" />
+    <ClInclude Include="gpuCache\gpuCacheVBOProxy.h" />
+    <ClInclude Include="gpuCache\gpuCacheVramQuery.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="gpuCache\CacheAlembicUtil.cpp" />
+    <ClCompile Include="gpuCache\CacheReader.cpp" />
+    <ClCompile Include="gpuCache\CacheReaderAlembic.cpp" />
+    <ClCompile Include="gpuCache\CacheWriter.cpp" />
+    <ClCompile Include="gpuCache\CacheWriterAlembic.cpp" />
+    <ClCompile Include="gpuCache\gpuCacheCmd.cpp" />
+    <ClCompile Include="gpuCache\gpuCacheConfig.cpp" />
+    <ClCompile Include="gpuCache\gpuCacheDrawOverride.cpp" />
+    <ClCompile Include="gpuCache\gpuCacheDrawTraversal.cpp" />
+    <ClCompile Include="gpuCache\gpuCacheFrustum.cpp" />
+    <ClCompile Include="gpuCache\gpuCacheGeometry.cpp" />
+    <ClCompile Include="gpuCache\gpuCacheGLFT.cpp" />
+    <ClCompile Include="gpuCache\gpuCacheGLPickingSelect.cpp" />
+    <ClCompile Include="gpuCache\gpuCacheIsectUtil.cpp" />
+    <ClCompile Include="gpuCache\gpuCacheMaterial.cpp" />
+    <ClCompile Include="gpuCache\gpuCacheMaterialBakers.cpp" />
+    <ClCompile Include="gpuCache\gpuCacheMaterialNodes.cpp" />
+    <ClCompile Include="gpuCache\gpuCachePluginMain.cpp" />
+    <ClCompile Include="gpuCache\gpuCacheRasterSelect.cpp" />
+    <ClCompile Include="gpuCache\gpuCacheSample.cpp" />
+    <ClCompile Include="gpuCache\gpuCacheSelect.cpp" />
+    <ClCompile Include="gpuCache\gpuCacheShapeNode.cpp" />
+    <ClCompile Include="gpuCache\gpuCacheSpatialGrid.cpp" />
+    <ClCompile Include="gpuCache\gpuCacheSpatialGridWalker.cpp" />
+    <ClCompile Include="gpuCache\gpuCacheSpatialSubdivision.cpp" />
+    <ClCompile Include="gpuCache\gpuCacheSubSceneOverride.cpp" />
+    <ClCompile Include="gpuCache\gpuCacheUnitBoundingBox.cpp" />
+    <ClCompile Include="gpuCache\gpuCacheUtil.cpp" />
+    <ClCompile Include="gpuCache\gpuCacheVBOProxy.cpp" />
+    <ClCompile Include="gpuCache\gpuCacheVramQuery.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="gpuCache\mel\AEgpuCacheRelated.mel" />
+    <None Include="gpuCache\mel\AEgpuCacheTemplate.mel" />
+    <None Include="gpuCache\mel\AEgpuCacheTemplate.res.mel" />
+    <None Include="gpuCache\mel\doGpuCacheExportArgList.mel" />
+    <None Include="gpuCache\mel\doGpuCacheExportArgList.res.mel" />
+    <None Include="gpuCache\mel\doGpuCacheImport.mel" />
+    <None Include="gpuCache\mel\doGpuCacheImportArgList.mel" />
+    <None Include="gpuCache\mel\doGpuCacheImportArgList.res.mel" />
+    <None Include="gpuCache\mel\gpuCacheCreateUI.mel" />
+    <None Include="gpuCache\mel\gpuCacheCreateUI.res.mel" />
+    <None Include="gpuCache\mel\gpuCacheInitStrings.mel" />
+    <None Include="gpuCache\mel\gpuCacheListModelEditorPanels.mel" />
+    <None Include="gpuCache\mel\performGpuCacheExport.mel" />
+    <None Include="gpuCache\mel\performGpuCacheExport.res.mel" />
+    <None Include="gpuCache\mel\performGpuCacheImport.mel" />
+    <None Include="gpuCache\mel\performGpuCacheImport.res.mel" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
