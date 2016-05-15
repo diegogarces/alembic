@@ -1,0 +1,407 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug_2015|x64">
+      <Configuration>Debug_2015</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug_hdf5_1.8.9|x64">
+      <Configuration>Debug_hdf5_1.8.9</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release_2015_latest|x64">
+      <Configuration>Release_2015_latest</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release_2015|x64">
+      <Configuration>Release_2015</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release_hdf5_1.8.9|x64">
+      <Configuration>Release_hdf5_1.8.9</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AbcImport\AbcImport.h" />
+    <ClInclude Include="AbcImport\AlembicImportFileTranslator.h" />
+    <ClInclude Include="AbcImport\AlembicNode.h" />
+    <ClInclude Include="AbcImport\CameraHelper.h" />
+    <ClInclude Include="AbcImport\CreateSceneHelper.h" />
+    <ClInclude Include="AbcImport\LocatorHelper.h" />
+    <ClInclude Include="AbcImport\MeshHelper.h" />
+    <ClInclude Include="AbcImport\NodeIteratorVisitorHelper.h" />
+    <ClInclude Include="AbcImport\NurbsCurveHelper.h" />
+    <ClInclude Include="AbcImport\NurbsSurfaceHelper.h" />
+    <ClInclude Include="AbcImport\PointHelper.h" />
+    <ClInclude Include="AbcImport\util.h" />
+    <ClInclude Include="AbcImport\XformHelper.h" />
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="AbcImport.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="AbcImport\AbcImport.cpp" />
+    <ClCompile Include="AbcImport\AlembicImportFileTranslator.cpp" />
+    <ClCompile Include="AbcImport\AlembicNode.cpp" />
+    <ClCompile Include="AbcImport\CameraHelper.cpp" />
+    <ClCompile Include="AbcImport\CreateSceneHelper.cpp" />
+    <ClCompile Include="AbcImport\LocatorHelper.cpp" />
+    <ClCompile Include="AbcImport\main.cpp" />
+    <ClCompile Include="AbcImport\MeshHelper.cpp" />
+    <ClCompile Include="AbcImport\NodeIteratorVisitorHelper.cpp" />
+    <ClCompile Include="AbcImport\NurbsCurveHelper.cpp" />
+    <ClCompile Include="AbcImport\NurbsSurfaceHelper.cpp" />
+    <ClCompile Include="AbcImport\PointHelper.cpp" />
+    <ClCompile Include="AbcImport\util.cpp" />
+    <ClCompile Include="AbcImport\XformHelper.cpp" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectName>AbcImport</ProjectName>
+    <ProjectGuid>{57DE3680-FCB5-4A6A-9C5C-2B5D26007790}</ProjectGuid>
+    <RootNamespace>AbcImport</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_hdf5_1.8.9|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_2015|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_2015_latest|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_hdf5_1.8.9|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_2015|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release_hdf5_1.8.9|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release_2015|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release_2015_latest|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug_hdf5_1.8.9|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug_2015|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.40219.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">O:\$(ProjectName)\$(Platform)\$(Configuration)\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug_hdf5_1.8.9|x64'">O:\$(ProjectName)\$(Platform)\$(Configuration)\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug_2015|x64'">O:\$(ProjectName)\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">O:\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug_hdf5_1.8.9|x64'">O:\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug_2015|x64'">O:\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">O:\$(ProjectName)\$(Platform)\$(Configuration)\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release_hdf5_1.8.9|x64'">O:\$(ProjectName)\$(Platform)\$(Configuration)\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release_2015|x64'">O:\$(ProjectName)\$(Platform)\$(Configuration)\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release_2015_latest|x64'">O:\$(ProjectName)\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">O:\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release_hdf5_1.8.9|x64'">O:\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release_2015|x64'">O:\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release_2015_latest|x64'">O:\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug_hdf5_1.8.9|x64'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug_2015|x64'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug_hdf5_1.8.9|x64'" />
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug_2015|x64'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug_hdf5_1.8.9|x64'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug_2015|x64'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|x64'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release_hdf5_1.8.9|x64'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release_2015|x64'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release_2015_latest|x64'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release_hdf5_1.8.9|x64'" />
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release_2015|x64'" />
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release_2015_latest|x64'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release_hdf5_1.8.9|x64'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release_2015|x64'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release_2015_latest|x64'" />
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.mll</TargetExt>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug_hdf5_1.8.9|x64'">.mll</TargetExt>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug_2015|x64'">.mll</TargetExt>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.mll</TargetExt>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release_hdf5_1.8.9|x64'">.mll</TargetExt>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release_2015|x64'">.mll</TargetExt>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release_2015_latest|x64'">.mll</TargetExt>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectName)d</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug_hdf5_1.8.9|x64'">$(ProjectName)d</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug_2015|x64'">$(ProjectName)</TargetName>
+    <PostBuildEventUseInBuild Condition="'$(Configuration)|$(Platform)'=='Debug_hdf5_1.8.9|x64'">true</PostBuildEventUseInBuild>
+    <PostBuildEventUseInBuild Condition="'$(Configuration)|$(Platform)'=='Debug_2015|x64'">true</PostBuildEventUseInBuild>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalOptions>/Gm /GR /GS /EHsc /Zi /I "." /D "WIN32" /D "_DEBUG" /RTC1 /c %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\contrib\ilmbase-1.0.2\Iex;..\contrib\ilmbase-1.0.2\Imath;..\contrib\zlib-1.2.7;..\contrib\ilmbase-1.0.2\Half;..\lib;C:\Program Files\Autodesk\Maya2013\include;..\contrib\boost_1_52_0;..\contrib\hdf5-1.8.10-patch1\src;..\contrib\hdf5-1.8.10-patch1\hl\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_AFXDLL;_MBCS;NT_PLUGIN;REQUIRE_IOSTREAM;Bits64_;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeaderOutputFile>$(OutDir)$(ProjectName).pch</PrecompiledHeaderOutputFile>
+      <WarningLevel>Level3</WarningLevel>
+    </ClCompile>
+    <Link>
+      <AdditionalOptions>/subsystem:windows /dll /incremental:yes /debug /export:initializePlugin /export:uninitializePlugin %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>Foundation.lib;OpenMaya.lib;OpenMayaAnim.lib;OpenMayaFX.lib;libboost_date_time-vc100-mt-gd-1_42.lib;libboost_iostreams-vc100-mt-gd-1_42.lib;libboost_program_options-vc100-mt-gd-1_42.lib;libboost_thread-vc100-mt-gd-1_42.lib;hdf5d.lib;hdf5_hld.lib;Halfd.lib;Iexd.lib;IlmThreadd.lib;Imathd.lib;zlibd.lib;libszipd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>O:\$(ProjectName)\$(Platform)\$(Configuration)\$(TargetName).mll</OutputFile>
+      <AdditionalLibraryDirectories>C:\Program Files\Autodesk\Maya2013\lib;..\Libs\boost;..\Libs\hdf5;..\Libs\IlmBase;..\Libs\szip;..\Libs\zlib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ProgramDatabaseFile>$(OutDir)$(ProjectName).pdb</ProgramDatabaseFile>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
+      <ImportLibrary>$(OutDir)$(ProjectName).lib</ImportLibrary>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <IgnoreSpecificDefaultLibraries>
+      </IgnoreSpecificDefaultLibraries>
+    </Link>
+    <PostBuildEvent>
+      <Command>rem xcopy /y /s "$(MAYA_DEV_USER_PATH)"\scripts\ilion_maya_framework\plugins\$(ProjectName).mll "$(ProjectDir)"deploy
+rem xcopy /y /s "$(ProjectDir)"deploy\mels\*.mel "$(MAYA_DEV_USER_PATH)"\scripts\ilion_maya_framework\mels
+
+mkdir  L:\lib\$(Platform)\vs2010\$(ProjectName)
+copy O:\$(ProjectName)\$(Platform)\$(Configuration)\$(TargetName).mll L:\lib\$(Platform)\vs2010\$(ProjectName)\$(TargetName).mll
+
+mkdir  .\deploy
+copy O:\$(ProjectName)\$(Platform)\$(Configuration)\$(TargetName).mll .\deploy\$(TargetName).mll
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_hdf5_1.8.9|x64'">
+    <ClCompile>
+      <AdditionalOptions>/Gm /GR /GS /EHsc /Zi /I "." /D "WIN32" /D "_DEBUG" /RTC1 /c %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\contrib\ilmbase-1.0.2\Iex;..\contrib\ilmbase-1.0.2\Imath;..\contrib\ilmbase-1.0.2\Half;..\contrib\zlib-1.2.8;..\lib;..\contrib\boost-1.42.0;..\contrib\hdf5-1.8.9\src;..\contrib\hdf5-1.8.9\hl\src;..\contrib\hdf5-1.8.9\windows\src;C:\Program Files\Autodesk\Maya2013\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_AFXDLL;_MBCS;NT_PLUGIN;REQUIRE_IOSTREAM;Bits64_;NOMINMAX;_WINSOCKAPI_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeaderOutputFile>$(OutDir)$(ProjectName).pch</PrecompiledHeaderOutputFile>
+      <WarningLevel>Level3</WarningLevel>
+    </ClCompile>
+    <Link>
+      <AdditionalOptions>/subsystem:windows /dll /incremental:yes /debug /export:initializePlugin /export:uninitializePlugin %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>Foundation.lib;OpenMaya.lib;OpenMayaAnim.lib;OpenMayaFX.lib;hdf5d.lib;hdf5_hld.lib;Halfd.lib;Iexd.lib;IlmThreadd.lib;Imathd.lib;zlibd.lib;libszipd.lib;AlembicAbcd.lib;AlembicAbcCollectiond.lib;AlembicAbcCoreAbstractd.lib;AlembicAbcCoreFactoryd.lib;AlembicAbcCoreHDF5d.lib;AlembicAbcCoreOgawad.lib;AlembicAbcCoreOpenGLd.lib;AlembicAbcGeomd.lib;AlembicAbcMateriald.lib;AlembicOgawad.lib;AlembicUtild.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>O:\$(ProjectName)\$(Platform)\$(Configuration)\$(TargetName).mll</OutputFile>
+      <AdditionalLibraryDirectories>C:\Program Files\Autodesk\Maya2013\lib;..\Libs\hdf5;..\Libs\IlmBase;..\Libs\szip;..\Libs\zlib;..\Libs\Alembic;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ProgramDatabaseFile>$(OutDir)$(ProjectName).pdb</ProgramDatabaseFile>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
+      <ImportLibrary>$(OutDir)$(ProjectName).lib</ImportLibrary>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <IgnoreSpecificDefaultLibraries>
+      </IgnoreSpecificDefaultLibraries>
+    </Link>
+    <PostBuildEvent>
+      <Command>rem xcopy /y /s "$(MAYA_DEV_USER_PATH)"\scripts\ilion_maya_framework\plugins\$(ProjectName).mll "$(ProjectDir)"deploy
+rem xcopy /y /s "$(ProjectDir)"deploy\mels\*.mel "$(MAYA_DEV_USER_PATH)"\scripts\ilion_maya_framework\mels
+
+mkdir  L:\lib\$(Platform)\vs2010\$(ProjectName)
+copy O:\$(ProjectName)\$(Platform)\$(Configuration)\$(TargetName).mll L:\lib\$(Platform)\vs2010\$(ProjectName)\$(TargetName).mll
+
+mkdir  .\deploy
+copy O:\$(ProjectName)\$(Platform)\$(Configuration)\$(TargetName).mll .\deploy\$(TargetName).mll
+
+copy O:\$(ProjectName)\$(Platform)\$(Configuration)\$(TargetName).mll $(MAYA_2013_DEV_USER_PATH)\2013-x64\scripts\ilion_maya_framework\binary_plugins\AbcImport.mll
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_2015|x64'">
+    <ClCompile>
+      <AdditionalOptions>/Gm /GR /GS /EHsc /Zi /I "." /D "WIN32" /D "_DEBUG" /RTC1 /c %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\contrib\ilmbase-1.0.2\Iex;..\contrib\ilmbase-1.0.2\Imath;..\contrib\ilmbase-1.0.2\Half;..\contrib\zlib-1.2.8;..\lib;..\contrib\boost-1.42.0;..\contrib\hdf5-1.8.9\src;..\contrib\hdf5-1.8.9\hl\src;..\contrib\hdf5-1.8.9\windows\src;$(MAYA_2015_DEV_PATH)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_AFXDLL;_MBCS;NT_PLUGIN;REQUIRE_IOSTREAM;Bits64_;NOMINMAX;_WINSOCKAPI_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeaderOutputFile>$(OutDir)$(ProjectName).pch</PrecompiledHeaderOutputFile>
+      <WarningLevel>Level3</WarningLevel>
+    </ClCompile>
+    <Link>
+      <AdditionalOptions>/subsystem:windows /dll /incremental:yes /debug /export:initializePlugin /export:uninitializePlugin %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>Foundation.lib;OpenMaya.lib;OpenMayaAnim.lib;OpenMayaFX.lib;hdf5d.lib;hdf5_hld.lib;Halfd.lib;Iexd.lib;IlmThreadd.lib;Imathd.lib;zlibd.lib;libszipd.lib;AlembicAbcd.lib;AlembicAbcCollectiond.lib;AlembicAbcCoreAbstractd.lib;AlembicAbcCoreFactoryd.lib;AlembicAbcCoreHDF5d.lib;AlembicAbcCoreOgawad.lib;AlembicAbcCoreOpenGLd.lib;AlembicAbcGeomd.lib;AlembicAbcMateriald.lib;AlembicOgawad.lib;AlembicUtild.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(MAYA_2015_DEV_USER_PATH)\2015-x64\scripts\ilion_maya_framework\binary_plugins\$(ProjectName)\dev\$(ProjectName).mll</OutputFile>
+      <AdditionalLibraryDirectories>$(MAYA_2015_DEV_PATH)\lib;..\Libs\hdf5;..\Libs\IlmBase;..\Libs\szip;..\Libs\zlib;..\Libs\Alembic;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ProgramDatabaseFile>$(OutDir)$(ProjectName).pdb</ProgramDatabaseFile>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
+      <ImportLibrary>$(OutDir)$(ProjectName).lib</ImportLibrary>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <IgnoreSpecificDefaultLibraries>
+      </IgnoreSpecificDefaultLibraries>
+    </Link>
+    <PostBuildEvent>
+      <Command>mkdir "$(ProjectDir)"deploy\2015
+mkdir "$(MAYA_2015_DEV_USER_PATH)"\2015-x64\scripts\ilion_maya_framework\binary_plugins\$(ProjectName)\dev\mels
+echo f | xcopy /y /s "$(MAYA_2015_DEV_USER_PATH)"\2015-x64\scripts\ilion_maya_framework\binary_plugins\$(ProjectName)\dev\$(ProjectName).mll "$(ProjectDir)"deploy\2015\$(ProjectName).mll
+REM xcopy /y /s "$(ProjectDir)"deploy\mels\*.mel "$(MAYA_2015_DEV_USER_PATH)"\2015-x64\scripts\ilion_maya_framework\binary_plugins\$(ProjectName)\dev\mels</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalOptions>/GR /GS /EHsc /I "."  /c %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>MaxSpeed</Optimization>
+      <AdditionalIncludeDirectories>..\contrib\ilmbase-1.0.2\Iex;..\contrib\ilmbase-1.0.2\Imath;..\contrib\ilmbase-1.0.2\Half;..\contrib\zlib-1.2.7;..\lib;C:\Program Files\Autodesk\Maya2013\include;..\contrib\boost_1_42_0;..\contrib\hdf5-1.8.10-patch1\src;..\contrib\hdf5-1.8.10-patch1\hl\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_AFXDLL;_MBCS;NT_PLUGIN;REQUIRE_IOSTREAM;Bits64_;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <PrecompiledHeaderOutputFile>$(OutDir)$(ProjectName).pch</PrecompiledHeaderOutputFile>
+      <WarningLevel>Level3</WarningLevel>
+    </ClCompile>
+    <Link>
+      <AdditionalOptions>/subsystem:windows /incremental:no /export:initializePlugin /export:uninitializePlugin %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>Foundation.lib;OpenMaya.lib;OpenMayaAnim.lib;OpenMayaFX.lib;libboost_date_time-vc100-mt-1_42.lib;libboost_iostreams-vc100-mt-1_42.lib;libboost_program_options-vc100-mt-1_42.lib;libboost_thread-vc100-mt-1_42.lib;hdf5.lib;hdf5_hl.lib;Half.lib;Iex.lib;IlmThread.lib;Imath.lib;zlib.lib;libszip.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>O:\$(ProjectName)\$(Platform)\$(Configuration)\$(ProjectName).mll</OutputFile>
+      <AdditionalLibraryDirectories>C:\Program Files\Autodesk\Maya2013\lib;..\Libs\boost;..\Libs\hdf5;..\Libs\IlmBase;..\Libs\zlib;..\Libs\szip;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ProgramDatabaseFile>$(OutDir)$(ProjectName).pdb</ProgramDatabaseFile>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
+      <ImportLibrary>$(OutDir)$(ProjectName).lib</ImportLibrary>
+    </Link>
+    <PostBuildEvent>
+      <Command>rem xcopy /y /s "$(MAYA_DEV_USER_PATH)"\scripts\ilion_maya_framework\plugins\$(ProjectName).mll "$(ProjectDir)"deploy
+rem xcopy /y /s "$(ProjectDir)"deploy\mels\*.mel "$(MAYA_DEV_USER_PATH)"\scripts\ilion_maya_framework\mels
+
+mkdir  L:\lib\$(Platform)\vs2010\$(ProjectName)
+copy O:\$(ProjectName)\$(Platform)\$(Configuration)\$(ProjectName).mll L:\lib\$(Platform)\vs2010\$(ProjectName)\$(ProjectName).mll
+
+mkdir  .\deploy
+copy O:\$(ProjectName)\$(Platform)\$(Configuration)\$(TargetName).mll .\deploy\$(TargetName).mll</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_hdf5_1.8.9|x64'">
+    <ClCompile>
+      <AdditionalOptions>/GR /GS /EHsc /I "."  /c %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>MaxSpeed</Optimization>
+      <AdditionalIncludeDirectories>..\contrib\ilmbase-1.0.2\Iex;..\contrib\ilmbase-1.0.2\Imath;..\contrib\ilmbase-1.0.2\Half;..\contrib\zlib-1.2.8;..\lib;..\contrib\boost-1.42.0;..\contrib\hdf5-1.8.9\src;..\contrib\hdf5-1.8.9\hl\src;..\contrib\hdf5-1.8.9\windows\src;C:\Program Files\Autodesk\Maya2013\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_AFXDLL;_MBCS;NT_PLUGIN;REQUIRE_IOSTREAM;Bits64_;NOMINMAX;_WINSOCKAPI_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <PrecompiledHeaderOutputFile>$(OutDir)$(ProjectName).pch</PrecompiledHeaderOutputFile>
+      <WarningLevel>Level3</WarningLevel>
+    </ClCompile>
+    <Link>
+      <AdditionalOptions>/subsystem:windows /incremental:no /export:initializePlugin /export:uninitializePlugin %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>Foundation.lib;OpenMaya.lib;OpenMayaAnim.lib;OpenMayaFX.lib;hdf5.lib;hdf5_hl.lib;Half.lib;Iex.lib;IlmThread.lib;Imath.lib;zlib.lib;libszip.lib;AlembicAbc.lib;AlembicAbcCollection.lib;AlembicAbcCoreAbstract.lib;AlembicAbcCoreFactory.lib;AlembicAbcCoreHDF5.lib;AlembicAbcCoreOgawa.lib;AlembicAbcCoreOpenGL.lib;AlembicAbcGeom.lib;AlembicAbcMaterial.lib;AlembicOgawa.lib;AlembicUtil.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>O:\$(ProjectName)\$(Platform)\$(Configuration)\$(ProjectName).mll</OutputFile>
+      <AdditionalLibraryDirectories>C:\Program Files\Autodesk\Maya2013\lib;..\Libs\hdf5;..\Libs\IlmBase;..\Libs\szip;..\Libs\zlib;..\Libs\Alembic;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ProgramDatabaseFile>$(OutDir)$(ProjectName).pdb</ProgramDatabaseFile>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
+      <ImportLibrary>$(OutDir)$(ProjectName).lib</ImportLibrary>
+    </Link>
+    <PostBuildEvent>
+      <Command>rem xcopy /y /s "$(MAYA_DEV_USER_PATH)"\scripts\ilion_maya_framework\plugins\$(ProjectName).mll "$(ProjectDir)"deploy
+rem xcopy /y /s "$(ProjectDir)"deploy\mels\*.mel "$(MAYA_DEV_USER_PATH)"\scripts\ilion_maya_framework\mels
+
+mkdir  L:\lib\$(Platform)\vs2010\$(ProjectName)
+copy O:\$(ProjectName)\$(Platform)\$(Configuration)\$(ProjectName).mll L:\lib\$(Platform)\vs2010\$(ProjectName)\$(ProjectName).mll
+
+mkdir  .\deploy
+copy O:\$(ProjectName)\$(Platform)\$(Configuration)\$(TargetName).mll .\deploy\$(TargetName).mll
+
+copy O:\$(ProjectName)\$(Platform)\$(Configuration)\$(TargetName).mll $(MAYA_2013_DEV_USER_PATH)\2013-x64\scripts\ilion_maya_framework\binary_plugins\AbcImport.mll</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_2015|x64'">
+    <ClCompile>
+      <AdditionalOptions>/GR /GS /EHsc /I "."  /c %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>MaxSpeed</Optimization>
+      <AdditionalIncludeDirectories>..\contrib\ilmbase-1.0.2\Iex;..\contrib\ilmbase-1.0.2\Imath;..\contrib\ilmbase-1.0.2\Half;..\contrib\zlib-1.2.8;..\lib;..\contrib\boost-1.42.0;..\contrib\hdf5-1.8.9\src;..\contrib\hdf5-1.8.9\hl\src;..\contrib\hdf5-1.8.9\windows\src;$(MAYA_2015_DEV_PATH)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_AFXDLL;_MBCS;NT_PLUGIN;REQUIRE_IOSTREAM;Bits64_;NOMINMAX;_WINSOCKAPI_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <PrecompiledHeaderOutputFile>$(OutDir)$(ProjectName).pch</PrecompiledHeaderOutputFile>
+      <WarningLevel>Level3</WarningLevel>
+    </ClCompile>
+    <Link>
+      <AdditionalOptions>/subsystem:windows /incremental:no /export:initializePlugin /export:uninitializePlugin %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>Foundation.lib;OpenMaya.lib;OpenMayaAnim.lib;OpenMayaFX.lib;hdf5.lib;hdf5_hl.lib;Half.lib;Iex.lib;IlmThread.lib;Imath.lib;zlib.lib;libszip.lib;AlembicAbc.lib;AlembicAbcCollection.lib;AlembicAbcCoreAbstract.lib;AlembicAbcCoreFactory.lib;AlembicAbcCoreHDF5.lib;AlembicAbcCoreOgawa.lib;AlembicAbcOpenGL.lib;AlembicAbcGeom.lib;AlembicAbcMaterial.lib;AlembicOgawa.lib;AlembicUtil.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(MAYA_2015_DEV_USER_PATH)\2015-x64\scripts\ilion_maya_framework\binary_plugins\$(ProjectName)\dev\$(ProjectName).mll</OutputFile>
+      <AdditionalLibraryDirectories>$(MAYA_2015_DEV_PATH)\lib;..\Libs\hdf5;..\Libs\IlmBase-1.0.2;..\Libs\szip;..\Libs\zlib;..\Libs\Alembic;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ProgramDatabaseFile>$(OutDir)$(ProjectName).pdb</ProgramDatabaseFile>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
+      <ImportLibrary>$(OutDir)$(ProjectName).lib</ImportLibrary>
+    </Link>
+    <PostBuildEvent>
+      <Command>mkdir "$(ProjectDir)"deploy\2015
+mkdir "$(MAYA_2015_DEV_USER_PATH)"\2015-x64\scripts\ilion_maya_framework\binary_plugins\$(ProjectName)\dev\mels
+echo f | xcopy /y /s "$(MAYA_2015_DEV_USER_PATH)"\2015-x64\scripts\ilion_maya_framework\binary_plugins\$(ProjectName)\dev\$(ProjectName).mll "$(ProjectDir)"deploy\2015\$(ProjectName).mll
+REM xcopy /y /s "$(ProjectDir)"deploy\mels\*.mel "$(MAYA_2015_DEV_USER_PATH)"\2015-x64\scripts\ilion_maya_framework\binary_plugins\$(ProjectName)\dev\mels</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_2015_latest|x64'">
+    <ClCompile>
+      <AdditionalOptions>/GR /GS /EHsc /I "."  /c %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>MaxSpeed</Optimization>
+      <AdditionalIncludeDirectories>..\contrib\ilmbase-1.0.2\Iex;..\contrib\ilmbase-1.0.2\Imath;..\contrib\ilmbase-1.0.2\Half;..\contrib\zlib-1.2.8;..\lib;..\contrib\boost-1.42.0;..\contrib\hdf5-1.8.9\src;..\contrib\hdf5-1.8.9\hl\src;..\contrib\hdf5-1.8.9\windows\src;$(MAYA_2015_DEV_PATH)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_AFXDLL;_MBCS;NT_PLUGIN;REQUIRE_IOSTREAM;Bits64_;NOMINMAX;_WINSOCKAPI_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <PrecompiledHeaderOutputFile>$(OutDir)$(ProjectName).pch</PrecompiledHeaderOutputFile>
+      <WarningLevel>Level3</WarningLevel>
+    </ClCompile>
+    <Link>
+      <AdditionalOptions>/subsystem:windows /incremental:no /export:initializePlugin /export:uninitializePlugin %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>Foundation.lib;OpenMaya.lib;OpenMayaAnim.lib;OpenMayaFX.lib;hdf5.lib;hdf5_hl.lib;Half.lib;Iex.lib;IlmThread.lib;Imath.lib;zlib.lib;libszip.lib;AlembicAbc.lib;AlembicAbcCollection.lib;AlembicAbcCoreAbstract.lib;AlembicAbcCoreFactory.lib;AlembicAbcCoreHDF5.lib;AlembicAbcCoreOgawa.lib;AlembicAbcOpenGL.lib;AlembicAbcGeom.lib;AlembicAbcMaterial.lib;AlembicOgawa.lib;AlembicUtil.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(MAYA_2015_DEV_USER_PATH)\2015-x64\scripts\ilion_maya_framework\binary_plugins\$(ProjectName)\dev\$(ProjectName).mll</OutputFile>
+      <AdditionalLibraryDirectories>$(MAYA_2015_DEV_PATH)\lib;..\Libs\hdf5;..\Libs\IlmBase-1.0.2;..\Libs\szip;..\Libs\zlib;..\Libs\Alembic;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ProgramDatabaseFile>$(OutDir)$(ProjectName).pdb</ProgramDatabaseFile>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
+      <ImportLibrary>$(OutDir)$(ProjectName).lib</ImportLibrary>
+    </Link>
+    <PostBuildEvent>
+      <Command>mkdir "$(ProjectDir)"deploy\2015
+mkdir "$(MAYA_2015_DEV_USER_PATH)"\2015-x64\scripts\ilion_maya_framework\binary_plugins\$(ProjectName)\dev\mels
+echo f | xcopy /y /s "$(MAYA_2015_DEV_USER_PATH)"\2015-x64\scripts\ilion_maya_framework\binary_plugins\$(ProjectName)\dev\$(ProjectName).mll "$(ProjectDir)"deploy\2015\$(ProjectName).mll
+REM xcopy /y /s "$(ProjectDir)"deploy\mels\*.mel "$(MAYA_2015_DEV_USER_PATH)"\2015-x64\scripts\ilion_maya_framework\binary_plugins\$(ProjectName)\dev\mels</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

@@ -1,0 +1,191 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="mels">
+      <UniqueIdentifier>{d28c107e-30be-4d23-b468-be30df0fa9be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers">
+      <UniqueIdentifier>{9c2d7495-48a1-482a-b8f8-be459dd32eee}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="gpuCache\CacheAlembicUtil.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="gpuCache\CacheReader.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="gpuCache\CacheReaderAlembic.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="gpuCache\CacheWriter.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="gpuCache\CacheWriterAlembic.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="gpuCache\gpuCacheCmd.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="gpuCache\gpuCacheConfig.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="gpuCache\gpuCacheDrawOverride.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="gpuCache\gpuCacheDrawTraversal.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="gpuCache\gpuCacheFrustum.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="gpuCache\gpuCacheGeometry.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="gpuCache\gpuCacheGLFT.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="gpuCache\gpuCacheGLPickingSelect.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="gpuCache\gpuCacheIsectUtil.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="gpuCache\gpuCacheMakeSharedHelper.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="gpuCache\gpuCacheMaterial.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="gpuCache\gpuCacheMaterialBakers.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="gpuCache\gpuCacheMaterialNodes.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="gpuCache\gpuCacheRasterSelect.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="gpuCache\gpuCacheSample.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="gpuCache\gpuCacheSelect.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="gpuCache\gpuCacheShapeNode.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="gpuCache\gpuCacheSpatialGrid.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="gpuCache\gpuCacheSpatialGridWalker.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="gpuCache\gpuCacheSpatialSubdivision.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="gpuCache\gpuCacheStrings.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="gpuCache\gpuCacheSubSceneOverride.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="gpuCache\gpuCacheTimeInterval.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="gpuCache\gpuCacheUnitBoundingBox.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="gpuCache\gpuCacheUtil.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="gpuCache\gpuCacheVBOProxy.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="gpuCache\gpuCacheVramQuery.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="gpuCache\CacheAlembicUtil.cpp" />
+    <ClCompile Include="gpuCache\CacheReader.cpp" />
+    <ClCompile Include="gpuCache\CacheReaderAlembic.cpp" />
+    <ClCompile Include="gpuCache\CacheWriter.cpp" />
+    <ClCompile Include="gpuCache\CacheWriterAlembic.cpp" />
+    <ClCompile Include="gpuCache\gpuCacheCmd.cpp" />
+    <ClCompile Include="gpuCache\gpuCacheConfig.cpp" />
+    <ClCompile Include="gpuCache\gpuCacheDrawOverride.cpp" />
+    <ClCompile Include="gpuCache\gpuCacheDrawTraversal.cpp" />
+    <ClCompile Include="gpuCache\gpuCacheFrustum.cpp" />
+    <ClCompile Include="gpuCache\gpuCacheGeometry.cpp" />
+    <ClCompile Include="gpuCache\gpuCacheGLFT.cpp" />
+    <ClCompile Include="gpuCache\gpuCacheGLPickingSelect.cpp" />
+    <ClCompile Include="gpuCache\gpuCacheIsectUtil.cpp" />
+    <ClCompile Include="gpuCache\gpuCacheMaterial.cpp" />
+    <ClCompile Include="gpuCache\gpuCacheMaterialBakers.cpp" />
+    <ClCompile Include="gpuCache\gpuCacheMaterialNodes.cpp" />
+    <ClCompile Include="gpuCache\gpuCachePluginMain.cpp" />
+    <ClCompile Include="gpuCache\gpuCacheRasterSelect.cpp" />
+    <ClCompile Include="gpuCache\gpuCacheSample.cpp" />
+    <ClCompile Include="gpuCache\gpuCacheSelect.cpp" />
+    <ClCompile Include="gpuCache\gpuCacheShapeNode.cpp" />
+    <ClCompile Include="gpuCache\gpuCacheSpatialGrid.cpp" />
+    <ClCompile Include="gpuCache\gpuCacheSpatialGridWalker.cpp" />
+    <ClCompile Include="gpuCache\gpuCacheSpatialSubdivision.cpp" />
+    <ClCompile Include="gpuCache\gpuCacheSubSceneOverride.cpp" />
+    <ClCompile Include="gpuCache\gpuCacheUnitBoundingBox.cpp" />
+    <ClCompile Include="gpuCache\gpuCacheUtil.cpp" />
+    <ClCompile Include="gpuCache\gpuCacheVBOProxy.cpp" />
+    <ClCompile Include="gpuCache\gpuCacheVramQuery.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="gpuCache\mel\AEgpuCacheRelated.mel">
+      <Filter>mels</Filter>
+    </None>
+    <None Include="gpuCache\mel\AEgpuCacheTemplate.mel">
+      <Filter>mels</Filter>
+    </None>
+    <None Include="gpuCache\mel\AEgpuCacheTemplate.res.mel">
+      <Filter>mels</Filter>
+    </None>
+    <None Include="gpuCache\mel\doGpuCacheExportArgList.mel">
+      <Filter>mels</Filter>
+    </None>
+    <None Include="gpuCache\mel\doGpuCacheExportArgList.res.mel">
+      <Filter>mels</Filter>
+    </None>
+    <None Include="gpuCache\mel\doGpuCacheImport.mel">
+      <Filter>mels</Filter>
+    </None>
+    <None Include="gpuCache\mel\doGpuCacheImportArgList.mel">
+      <Filter>mels</Filter>
+    </None>
+    <None Include="gpuCache\mel\doGpuCacheImportArgList.res.mel">
+      <Filter>mels</Filter>
+    </None>
+    <None Include="gpuCache\mel\gpuCacheCreateUI.mel">
+      <Filter>mels</Filter>
+    </None>
+    <None Include="gpuCache\mel\gpuCacheCreateUI.res.mel">
+      <Filter>mels</Filter>
+    </None>
+    <None Include="gpuCache\mel\gpuCacheInitStrings.mel">
+      <Filter>mels</Filter>
+    </None>
+    <None Include="gpuCache\mel\gpuCacheListModelEditorPanels.mel">
+      <Filter>mels</Filter>
+    </None>
+    <None Include="gpuCache\mel\performGpuCacheExport.mel">
+      <Filter>mels</Filter>
+    </None>
+    <None Include="gpuCache\mel\performGpuCacheExport.res.mel">
+      <Filter>mels</Filter>
+    </None>
+    <None Include="gpuCache\mel\performGpuCacheImport.mel">
+      <Filter>mels</Filter>
+    </None>
+    <None Include="gpuCache\mel\performGpuCacheImport.res.mel">
+      <Filter>mels</Filter>
+    </None>
+  </ItemGroup>
+</Project>
