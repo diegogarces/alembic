@@ -1,0 +1,179 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release_2015_latest|x64">
+      <Configuration>Release_2015_latest</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\lib\Alembic\AbcCoreOgawa\All.h" />
+    <ClInclude Include="..\..\lib\Alembic\AbcCoreOgawa\AprImpl.h" />
+    <ClInclude Include="..\..\lib\Alembic\AbcCoreOgawa\ApwImpl.h" />
+    <ClInclude Include="..\..\lib\Alembic\AbcCoreOgawa\ArImpl.h" />
+    <ClInclude Include="..\..\lib\Alembic\AbcCoreOgawa\AwImpl.h" />
+    <ClInclude Include="..\..\lib\Alembic\AbcCoreOgawa\CprData.h" />
+    <ClInclude Include="..\..\lib\Alembic\AbcCoreOgawa\CprImpl.h" />
+    <ClInclude Include="..\..\lib\Alembic\AbcCoreOgawa\CpwData.h" />
+    <ClInclude Include="..\..\lib\Alembic\AbcCoreOgawa\CpwImpl.h" />
+    <ClInclude Include="..\..\lib\Alembic\AbcCoreOgawa\Foundation.h" />
+    <ClInclude Include="..\..\lib\Alembic\AbcCoreOgawa\MetaDataMap.h" />
+    <ClInclude Include="..\..\lib\Alembic\AbcCoreOgawa\OrData.h" />
+    <ClInclude Include="..\..\lib\Alembic\AbcCoreOgawa\OrImpl.h" />
+    <ClInclude Include="..\..\lib\Alembic\AbcCoreOgawa\OwData.h" />
+    <ClInclude Include="..\..\lib\Alembic\AbcCoreOgawa\OwImpl.h" />
+    <ClInclude Include="..\..\lib\Alembic\AbcCoreOgawa\ReadUtil.h" />
+    <ClInclude Include="..\..\lib\Alembic\AbcCoreOgawa\ReadWrite.h" />
+    <ClInclude Include="..\..\lib\Alembic\AbcCoreOgawa\SprImpl.h" />
+    <ClInclude Include="..\..\lib\Alembic\AbcCoreOgawa\SpwImpl.h" />
+    <ClInclude Include="..\..\lib\Alembic\AbcCoreOgawa\StreamManager.h" />
+    <ClInclude Include="..\..\lib\Alembic\AbcCoreOgawa\WriteUtil.h" />
+    <ClInclude Include="..\..\lib\Alembic\AbcCoreOgawa\WrittenSampleMap.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\lib\Alembic\AbcCoreOgawa\AprImpl.cpp" />
+    <ClCompile Include="..\..\lib\Alembic\AbcCoreOgawa\ApwImpl.cpp" />
+    <ClCompile Include="..\..\lib\Alembic\AbcCoreOgawa\ArImpl.cpp" />
+    <ClCompile Include="..\..\lib\Alembic\AbcCoreOgawa\AwImpl.cpp" />
+    <ClCompile Include="..\..\lib\Alembic\AbcCoreOgawa\CprData.cpp" />
+    <ClCompile Include="..\..\lib\Alembic\AbcCoreOgawa\CprImpl.cpp" />
+    <ClCompile Include="..\..\lib\Alembic\AbcCoreOgawa\CpwData.cpp" />
+    <ClCompile Include="..\..\lib\Alembic\AbcCoreOgawa\CpwImpl.cpp" />
+    <ClCompile Include="..\..\lib\Alembic\AbcCoreOgawa\MetaDataMap.cpp" />
+    <ClCompile Include="..\..\lib\Alembic\AbcCoreOgawa\OrData.cpp" />
+    <ClCompile Include="..\..\lib\Alembic\AbcCoreOgawa\OrImpl.cpp" />
+    <ClCompile Include="..\..\lib\Alembic\AbcCoreOgawa\OwData.cpp" />
+    <ClCompile Include="..\..\lib\Alembic\AbcCoreOgawa\OwImpl.cpp" />
+    <ClCompile Include="..\..\lib\Alembic\AbcCoreOgawa\ReadUtil.cpp" />
+    <ClCompile Include="..\..\lib\Alembic\AbcCoreOgawa\ReadWrite.cpp" />
+    <ClCompile Include="..\..\lib\Alembic\AbcCoreOgawa\SprImpl.cpp" />
+    <ClCompile Include="..\..\lib\Alembic\AbcCoreOgawa\SpwImpl.cpp" />
+    <ClCompile Include="..\..\lib\Alembic\AbcCoreOgawa\StreamManager.cpp" />
+    <ClCompile Include="..\..\lib\Alembic\AbcCoreOgawa\WriteUtil.cpp" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{DFDF05F4-214E-4f37-BC58-7776A438A87C}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>AlembicAbcCoreOgawa</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_2015_latest|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="AlembicContrib.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="AlembicContrib.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release_2015_latest|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="AlembicContrib.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IntDir>O:\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>O:\$(ProjectName)\$(Platform)\$(Configuration)\</OutDir>
+    <TargetName>$(ProjectName)d</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IntDir>O:\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>O:\$(ProjectName)\$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_2015_latest|x64'">
+    <IntDir>O:\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>O:\$(ProjectName)\$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;PLATFORM_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ProgramDataBaseFileName>$(SolutionDir)$(Platform)\$(Configuration)\$(ProjectName).pdb</ProgramDataBaseFileName>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <Lib>
+      <OutputFile>..\..\Libs\Alembic\$(TargetName)$(TargetExt)</OutputFile>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;PLATFORM_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ProgramDataBaseFileName>$(SolutionDir)$(Platform)\$(Configuration)\$(ProjectName).pdb</ProgramDataBaseFileName>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <Lib>
+      <OutputFile>..\..\Libs\Alembic\$(TargetName)$(TargetExt)</OutputFile>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_2015_latest|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;PLATFORM_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ProgramDataBaseFileName>$(SolutionDir)$(Platform)\$(Configuration)\$(ProjectName).pdb</ProgramDataBaseFileName>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <Lib>
+      <OutputFile>..\..\Libs\Alembic\$(TargetName)$(TargetExt)</OutputFile>
+    </Lib>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
