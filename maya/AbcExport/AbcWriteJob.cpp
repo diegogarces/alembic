@@ -385,6 +385,7 @@ void AbcWriteJob::setup(double iFrame, MayaTransformWriterPtr iParent, GetMember
 
     // look for riCurves flag for flattening all curve objects to a curve group
     MFnDependencyNode fnDepNode(ob, &status);
+    MString nodeName = fnDepNode.name();
     MPlug riCurvesPlug = fnDepNode.findPlug("riCurves", &status);
     bool riCurvesVal = riCurvesPlug.asBool();
     bool writeOutAsGroup = false;
@@ -431,6 +432,18 @@ void AbcWriteJob::setup(double iFrame, MayaTransformWriterPtr iParent, GetMember
         AttributesWriterPtr attrs = nurbsCurve->getAttrs();
         if (mShapeTimeIndex != 0 && attrs->isAnimated())
             mShapeAttrList.push_back(attrs);
+    }
+    else if (ob.hasFn(MFn::kInstancer))
+    {
+        MFnInstancer fnInst(ob, &status);
+        if (status != MS::kSuccess)
+        {
+            MString msg = "Initialize instancer node ";
+            msg += mCurDag.fullPathName();
+            msg += " failed, skipping.";
+            MGlobal::displayWarning(msg);
+            return;
+        }
     }
     else if (ob.hasFn(MFn::kTransform))
     {
