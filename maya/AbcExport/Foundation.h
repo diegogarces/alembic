@@ -81,6 +81,7 @@
 #include <maya/MFnSpotLight.h>
 #include <maya/MFnStringArrayData.h>
 #include <maya/MFnTransform.h>
+#include <maya/MFnInstancer.h>
 #include <maya/MFnTypedAttribute.h>
 #include <maya/MFnVectorArrayData.h>
 #include <maya/MGlobal.h>
