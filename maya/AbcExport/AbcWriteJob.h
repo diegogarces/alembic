@@ -46,6 +46,7 @@
 #include "MayaTransformWriter.h"
 #include "MayaLocatorWriter.h"
 #include "MayaNurbsSurfaceWriter.h"
+#include "MayaInstancerWriter.h"
 
 #include "MayaUtility.h"
 
@@ -61,6 +62,8 @@ typedef Alembic::Util::shared_ptr < MayaPointPrimitiveWriter >
     MayaPointPrimitiveWriterPtr;
 typedef Alembic::Util::shared_ptr < MayaNurbsSurfaceWriter >
     MayaNurbsSurfaceWriterPtr;
+typedef Alembic::Util::shared_ptr < MayaInstancerWriter >
+MayaInstancerWriterPtr;
 
 struct AbcWriteJobStatistics
 {
@@ -105,6 +108,9 @@ struct AbcWriteJobStatistics
 
         mCameraStaticNum = 0;
         mCameraAnimNum = 0;
+
+        mInstancerStaticNum = 0;
+        mInstancerAnimNum = 0;
     }
 
     // for the statistic string
@@ -147,6 +153,9 @@ struct AbcWriteJobStatistics
 
     unsigned int mCameraStaticNum;
     unsigned int mCameraAnimNum;
+
+    unsigned int mInstancerStaticNum;
+    unsigned int mInstancerAnimNum;
 };
 
 class AbcWriteJob
@@ -189,6 +198,7 @@ class AbcWriteJob
     std::vector< MayaNurbsSurfaceWriterPtr > mNurbsList;
     std::vector< MayaLocatorWriterPtr > mLocatorList;
     std::vector< MayaPointPrimitiveWriterPtr > mPointList;
+    std::vector< MayaInstancerWriterPtr > mInstancerList;
     std::vector< AttributesWriterPtr > mShapeAttrList;
 
     // helper dag path map for bounding box calculation

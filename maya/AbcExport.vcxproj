@@ -27,6 +27,7 @@
     <ClCompile Include="AbcExport\AbcWriteJob.cpp" />
     <ClCompile Include="AbcExport\AttributesWriter.cpp" />
     <ClCompile Include="AbcExport\MayaCameraWriter.cpp" />
+    <ClCompile Include="AbcExport\MayaInstancerWriter.cpp" />
     <ClCompile Include="AbcExport\MayaLocatorWriter.cpp" />
     <ClCompile Include="AbcExport\MayaMeshWriter.cpp" />
     <ClCompile Include="AbcExport\MayaNurbsCurveWriter.cpp" />
@@ -41,6 +42,7 @@
     <ClInclude Include="AbcExport\AttributesWriter.h" />
     <ClInclude Include="AbcExport\Foundation.h" />
     <ClInclude Include="AbcExport\MayaCameraWriter.h" />
+    <ClInclude Include="AbcExport\MayaInstancerWriter.h" />
     <ClInclude Include="AbcExport\MayaLocatorWriter.h" />
     <ClInclude Include="AbcExport\MayaMeshWriter.h" />
     <ClInclude Include="AbcExport\MayaNurbsCurveWriter.h" />
@@ -48,12 +50,6 @@
     <ClInclude Include="AbcExport\MayaPointPrimitiveWriter.h" />
     <ClInclude Include="AbcExport\MayaTransformWriter.h" />
     <ClInclude Include="AbcExport\MayaUtility.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="AbcExport\CMakeLists.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="AbcExport\README" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="AbcExport.rc" />
