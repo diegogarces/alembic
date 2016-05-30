@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="AbcExport\AbcExport.cpp" />
+    <ClCompile Include="AbcExport\AbcWriteJob.cpp" />
+    <ClCompile Include="AbcExport\AttributesWriter.cpp" />
+    <ClCompile Include="AbcExport\MayaCameraWriter.cpp" />
+    <ClCompile Include="AbcExport\MayaLocatorWriter.cpp" />
+    <ClCompile Include="AbcExport\MayaMeshWriter.cpp" />
+    <ClCompile Include="AbcExport\MayaNurbsCurveWriter.cpp" />
+    <ClCompile Include="AbcExport\MayaNurbsSurfaceWriter.cpp" />
+    <ClCompile Include="AbcExport\MayaPointPrimitiveWriter.cpp" />
+    <ClCompile Include="AbcExport\MayaTransformWriter.cpp" />
+    <ClCompile Include="AbcExport\MayaUtility.cpp" />
+    <ClCompile Include="AbcExport\MayaInstancerWriter.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AbcExport\AbcExport.h" />
+    <ClInclude Include="AbcExport\AbcWriteJob.h" />
+    <ClInclude Include="AbcExport\AttributesWriter.h" />
+    <ClInclude Include="AbcExport\Foundation.h" />
+    <ClInclude Include="AbcExport\MayaCameraWriter.h" />
+    <ClInclude Include="AbcExport\MayaLocatorWriter.h" />
+    <ClInclude Include="AbcExport\MayaMeshWriter.h" />
+    <ClInclude Include="AbcExport\MayaNurbsCurveWriter.h" />
+    <ClInclude Include="AbcExport\MayaNurbsSurfaceWriter.h" />
+    <ClInclude Include="AbcExport\MayaPointPrimitiveWriter.h" />
+    <ClInclude Include="AbcExport\MayaTransformWriter.h" />
+    <ClInclude Include="AbcExport\MayaUtility.h" />
+    <ClInclude Include="AbcExport\MayaInstancerWriter.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="AbcExport.rc" />
+  </ItemGroup>
+</Project>

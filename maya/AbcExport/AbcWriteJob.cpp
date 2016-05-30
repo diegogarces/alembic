@@ -448,6 +448,23 @@ void AbcWriteJob::setup(double iFrame, MayaTransformWriterPtr iParent, GetMember
             MGlobal::displayWarning(msg);
             return;
         }
+
+        Alembic::Abc::OObject obj = (iParent == NULL ? mRoot.getTop() : iParent->getObject());
+      
+        MayaInstancerWriterPtr inst = MayaInstancerWriterPtr(new MayaInstancerWriter(
+                mCurDag, obj, mShapeTimeIndex, mArgs, gmMap));
+
+        if (inst->isAnimated() && mShapeTimeIndex != 0)
+        {
+            mInstancerList.push_back(inst);
+            mStats.mInstancerAnimNum++;
+        }
+        else
+            mStats.mInstancerStaticNum++;
+
+        AttributesWriterPtr attrs = inst->getAttrs();
+        if (mShapeTimeIndex != 0 && attrs->isAnimated())
+            mShapeAttrList.push_back(attrs);
     }
     else if (ob.hasFn(MFn::kTransform))
     {
@@ -1039,6 +1056,9 @@ void AbcWriteJob::postCallback(double iFrame)
 
     addToString(statsStr, "CameraStaticNum", mStats.mCameraStaticNum);
     addToString(statsStr, "CameraAnimNum", mStats.mCameraAnimNum);
+
+    addToString(statsStr, "InstancerStaticNum", mStats.mInstancerStaticNum);
+    addToString(statsStr, "InstancerAnimNum", mStats.mInstancerAnimNum);
 
     if (statsStr.length() > 0)
     {
