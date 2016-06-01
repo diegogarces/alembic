@@ -35,6 +35,8 @@
 //-*****************************************************************************
 
 #include "AbcWriteJob.h"
+#include <maya/MMatrixArray.h>
+
 
 #ifdef ALEMBIC_WITH_HDF5
 #include <Alembic/AbcCoreHDF5/All.h>
@@ -449,10 +451,29 @@ void AbcWriteJob::setup(double iFrame, MayaTransformWriterPtr iParent, GetMember
             return;
         }
 
+        MDagPathArray instancePaths;
+        MMatrixArray instanceMatrices;
+        MIntArray instancePathStartIndices;
+        MIntArray pathIndices;
+        status = fnInst.allInstances(instancePaths, instanceMatrices, instancePathStartIndices, pathIndices);
+        unsigned int numPaths = instancePaths.length();
+        // Export instanced dags
+        MDagPath instDag(mCurDag);
+        for (unsigned int iPath = 0; iPath < numPaths; ++iPath)
+        {
+            mCurDag = instancePaths[iPath];
+            MayaTransformWriterPtr parent;
+            // Find the dagPath to see if it's exported
+
+            // Find if any parent of the instance has been exported and put it in parent
+            setup(iFrame, parent, gmMap);
+        }
+
         Alembic::Abc::OObject obj = (iParent == NULL ? mRoot.getTop() : iParent->getObject());
       
         MayaInstancerWriterPtr inst = MayaInstancerWriterPtr(new MayaInstancerWriter(
                 mCurDag, obj, mShapeTimeIndex, mArgs, gmMap));
+        mExportedDags[mCurDag] = inst->GetAlembicObject();
 
         if (inst->isAnimated() && mShapeTimeIndex != 0)
         {

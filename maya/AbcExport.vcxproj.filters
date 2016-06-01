@@ -13,6 +13,7 @@
     <ClCompile Include="AbcExport\MayaTransformWriter.cpp" />
     <ClCompile Include="AbcExport\MayaUtility.cpp" />
     <ClCompile Include="AbcExport\MayaInstancerWriter.cpp" />
+    <ClCompile Include="AbcExport\TransformUtility.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbcExport\AbcExport.h" />
@@ -28,6 +29,7 @@
     <ClInclude Include="AbcExport\MayaTransformWriter.h" />
     <ClInclude Include="AbcExport\MayaUtility.h" />
     <ClInclude Include="AbcExport\MayaInstancerWriter.h" />
+    <ClInclude Include="AbcExport\TransformUtility.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="AbcExport.rc" />
