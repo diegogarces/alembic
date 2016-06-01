@@ -44,19 +44,7 @@
 
 #include "AttributesWriter.h"
 
-// AnimChan contains what animated plugs to get as a double, and the helper
-// info about what operation and which channel to set in mSample
-struct AnimChan
-{
-    MPlug plug;
-
-    // extra value to multiply the data off of the plug by, used to invert
-    // certain operations, and convert radians to degrees
-    double scale;
-
-    std::size_t opNum;
-    Alembic::Util::uint32_t channelNum;
-};
+#include "TransformUtility.h"
 
 // Writes an MFnTransform
 class MayaTransformWriter

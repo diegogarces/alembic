@@ -630,11 +630,11 @@ int main( int argc, char *argv[] )
     );
 
     // seg fault handler
-    struct sigaction act;
-    sigemptyset(&act.sa_mask);
-    act.sa_handler = segfault_sigaction;
-    act.sa_flags = SA_SIGINFO;
-    sigaction(SIGSEGV, &act, NULL);
+    //struct sigaction act;
+    //sigemptyset(&act.sa_mask);
+    //act.sa_handler = segfault_sigaction;
+    //act.sa_flags = SA_SIGINFO;
+    //sigaction(SIGSEGV, &act, NULL);
 
     // check for min args
     if ( argc < 2 ) {

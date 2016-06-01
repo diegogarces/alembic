@@ -35,6 +35,7 @@
     <ClCompile Include="AbcExport\MayaPointPrimitiveWriter.cpp" />
     <ClCompile Include="AbcExport\MayaTransformWriter.cpp" />
     <ClCompile Include="AbcExport\MayaUtility.cpp" />
+    <ClCompile Include="AbcExport\TransformUtility.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbcExport\AbcExport.h" />
@@ -50,6 +51,7 @@
     <ClInclude Include="AbcExport\MayaPointPrimitiveWriter.h" />
     <ClInclude Include="AbcExport\MayaTransformWriter.h" />
     <ClInclude Include="AbcExport\MayaUtility.h" />
+    <ClInclude Include="AbcExport\TransformUtility.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="AbcExport.rc" />
