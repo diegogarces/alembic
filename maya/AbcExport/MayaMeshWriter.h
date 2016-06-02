@@ -69,6 +69,7 @@ class MayaMeshWriter
     unsigned int getNumCVs();
     unsigned int getNumFaces();
     AttributesWriterPtr getAttrs() {return mAttrs;};
+	Alembic::Abc::OObject GetAlembicObject() { return isSubD() ? mSubDSchema.getObject() : mPolySchema.getObject(); };
 
   private:
 

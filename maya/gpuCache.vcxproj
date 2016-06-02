@@ -97,7 +97,7 @@
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
-      <AdditionalLibraryDirectories>$(MAYA_2015_DEV_PATH)\lib;..\Libs\hdf5;..\Libs\IlmBase-1.0.2;..\Libs\zlib;..\Libs\Alembic;..\Libs\szip;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(MAYA_2015_DEV_PATH)\lib;..\Libs\hdf5;..\Libs\IlmBase;..\Libs\zlib;..\Libs\Alembic;..\Libs\szip;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>OpenMaya.lib;OpenMayaUI.lib;OpenMayaAnim.lib;OpenMayaRender.lib;Foundation.lib;opengl32.lib;AlembicAbcCoreFactoryd.lib;AlembicAbcCoreHDF5d.lib;AlembicAbcCoreOgawad.lib;AlembicAbcGeomd.lib;AlembicAbcd.lib;AlembicAbcCoreAbstractd.lib;AlembicAbcMateriald.lib;AlembicAbcCollectiond.lib;AlembicOgawad.lib;AlembicUtild.lib;hdf5_hld.lib;hdf5d.lib;Iexd.lib;Halfd.lib;Imathd.lib;libzlib.lib;wbemuuid.lib;tbb.lib;libszip.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/export:initializePlugin /export:uninitializePlugin %(AdditionalOptions)</AdditionalOptions>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
