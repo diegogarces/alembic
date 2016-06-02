@@ -57,6 +57,8 @@ class MayaNurbsCurveWriter
     unsigned int getNumCurves();
     AttributesWriterPtr getAttrs() {return mAttrs;};
 
+	Alembic::Abc::OObject GetAlembicObject() { return mSchema.getObject(); };
+
   private:
 
     void fillTopology();

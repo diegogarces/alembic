@@ -35,7 +35,6 @@ MayaInstancerWriter::MayaInstancerWriter(MDagPath & iDag,
     instancerName = util::stripNamespaces(instancerName, iArgs.stripNamespace);
     Alembic::AbcGeom::OXform obj(iParent, instancerName.asChar(),
         iTimeIndex);
-    mAbcObject = obj;
     mSchema = obj.getSchema();
 
     // Prepare the attributes for the main transform
@@ -149,6 +148,11 @@ MayaInstancerWriter::MayaInstancerWriter(MDagPath & iDag,
     }
 }
 
+void MayaInstancerWriter::write()
+{
+
+}
+
 void MayaInstancerWriter::AddInstances(Alembic::Abc::OObject & iParent, Alembic::Util::uint32_t iTimeIndex,
     const JobArgs & iArgs, GetMembersMap& gmMap)
 {
@@ -212,6 +216,11 @@ unsigned int MayaInstancerWriter::getNumCVs()
     }
 
     return fnInstancer.particleCount();
+}
+
+void MayaInstancerWriter::pushTransformStack(const MMatrix & matrix)
+{
+
 }
 
 void MayaInstancerWriter::pushTransformStack(const MFnTransform & iTrans,

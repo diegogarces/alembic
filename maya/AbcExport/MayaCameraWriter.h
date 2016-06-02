@@ -53,6 +53,7 @@ class MayaCameraWriter
     AttributesWriterPtr getAttrs() {return mAttrs;};
     void write();
     bool isAnimated() const;
+	Alembic::Abc::OObject GetAlembicObject() { return mSchema.getObject(); };
 
   private:
 

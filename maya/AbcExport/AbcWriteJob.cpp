@@ -473,7 +473,8 @@ void AbcWriteJob::setup(double iFrame, MayaTransformWriterPtr iParent, GetMember
       
         MayaInstancerWriterPtr inst = MayaInstancerWriterPtr(new MayaInstancerWriter(
                 mCurDag, obj, mShapeTimeIndex, mArgs, gmMap));
-        mExportedDags[mCurDag] = inst->GetAlembicObject();
+		mExportedDags.insert(std::make_pair(mCurDag, inst->GetAlembicObject()));
+        //mExportedDags[mCurDag] = inst->GetAlembicObject();
 
         if (inst->isAnimated() && mShapeTimeIndex != 0)
         {
@@ -513,6 +514,7 @@ void AbcWriteJob::setup(double iFrame, MayaTransformWriterPtr iParent, GetMember
             trans = MayaTransformWriterPtr(new MayaTransformWriter(
                 *iParent, mCurDag, mTransTimeIndex, mArgs));
         }
+		mExportedDags.insert(std::make_pair(mCurDag, trans->getObject()));
 
         if (trans->isAnimated() && mTransTimeIndex != 0)
         {
@@ -555,6 +557,7 @@ void AbcWriteJob::setup(double iFrame, MayaTransformWriterPtr iParent, GetMember
             Alembic::Abc::OObject obj = iParent->getObject();
             MayaLocatorWriterPtr locator(new MayaLocatorWriter(
                 mCurDag, obj, mShapeTimeIndex, mArgs));
+			mExportedDags.insert(std::make_pair(mCurDag, locator->GetAlembicObject()));
 
             if (locator->isAnimated() && mShapeTimeIndex != 0)
             {
@@ -594,6 +597,7 @@ void AbcWriteJob::setup(double iFrame, MayaTransformWriterPtr iParent, GetMember
             Alembic::Abc::OObject obj = iParent->getObject();
             MayaPointPrimitiveWriterPtr particle(new MayaPointPrimitiveWriter(
                 iFrame, mCurDag, obj, mShapeTimeIndex, mArgs));
+			mExportedDags.insert(std::make_pair(mCurDag, particle->GetAlembicObject()));
 
             if (particle->isAnimated() && mShapeTimeIndex != 0)
             {
@@ -635,6 +639,7 @@ void AbcWriteJob::setup(double iFrame, MayaTransformWriterPtr iParent, GetMember
             Alembic::Abc::OObject obj = iParent->getObject();
             MayaMeshWriterPtr mesh(new MayaMeshWriter(mCurDag, obj,
                 mShapeTimeIndex, mArgs, gmMap));
+			mExportedDags.insert(std::make_pair(mCurDag, mesh->GetAlembicObject()));
 
             if (mesh->isAnimated() && mShapeTimeIndex != 0)
             {
@@ -696,6 +701,7 @@ void AbcWriteJob::setup(double iFrame, MayaTransformWriterPtr iParent, GetMember
             Alembic::Abc::OObject obj = iParent->getObject();
             MayaCameraWriterPtr camera(new MayaCameraWriter(
                 mCurDag, obj, mShapeTimeIndex, mArgs));
+			mExportedDags.insert(std::make_pair(mCurDag, camera->GetAlembicObject()));
 
             if (camera->isAnimated() && mShapeTimeIndex != 0)
             {
@@ -733,6 +739,7 @@ void AbcWriteJob::setup(double iFrame, MayaTransformWriterPtr iParent, GetMember
             Alembic::Abc::OObject obj = iParent->getObject();
             MayaNurbsSurfaceWriterPtr nurbsSurface(new MayaNurbsSurfaceWriter(
                 mCurDag, obj,  mShapeTimeIndex, mArgs));
+			mExportedDags.insert(std::make_pair(mCurDag, nurbsSurface->GetAlembicObject()));
 
             if (nurbsSurface->isAnimated() && mShapeTimeIndex != 0)
             {
@@ -774,6 +781,7 @@ void AbcWriteJob::setup(double iFrame, MayaTransformWriterPtr iParent, GetMember
             Alembic::Abc::OObject obj = iParent->getObject();
             MayaNurbsCurveWriterPtr nurbsCurve(new MayaNurbsCurveWriter(
                 mCurDag, obj, mShapeTimeIndex, false, mArgs));
+			mExportedDags.insert(std::make_pair(mCurDag, nurbsCurve->GetAlembicObject()));
 
             if (nurbsCurve->isAnimated() && mShapeTimeIndex != 0)
             {
@@ -943,6 +951,14 @@ bool AbcWriteJob::eval(double iFrame)
                 (*ptIt)->write(curTime);
                 mStats.mPointAnimCVs += (*ptIt)->getNumCVs();
             }
+
+			std::vector< MayaInstancerWriterPtr >::iterator instIt, instEnd;
+			instEnd = mInstancerList.end();
+			for (instEnd = mInstancerList.begin(); instIt != instEnd; instIt++)
+			{
+				(*instIt)->write();
+				mStats.mInstancerAnimNum += (*instIt)->getNumCVs();
+			}
 
             std::vector< AttributesWriterPtr >::iterator sattrCur =
                 mShapeAttrList.begin();

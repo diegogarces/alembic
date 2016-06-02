@@ -204,6 +204,9 @@ class AbcWriteJob
     // helper dag path map for bounding box calculation
     std::map< MDagPath, util::ShapeSet, util::cmpDag > mBBoxShapeMap;
 
+	// Association between exported Dags and Alembic Objects
+	std::map< MDagPath, Alembic::Abc::OObject, util::cmpDag> mExportedDags;
+
     // helper dag path for recursive calculations
     MDagPath mCurDag;
 
