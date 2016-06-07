@@ -385,6 +385,13 @@ void AbcWriteJob::setup(double iFrame, MayaTransformWriterPtr iParent, GetMember
         return;
     }
 
+    // Check if this dag was already exported
+    if (mExportedDags.find(mCurDag) != mExportedDags.end())
+    {
+        return;
+    }
+    mExportedDags.insert(std::make_pair(mCurDag, ExportedDagInfo()));
+
     // look for riCurves flag for flattening all curve objects to a curve group
     MFnDependencyNode fnDepNode(ob, &status);
     MString nodeName = fnDepNode.name();
@@ -437,7 +444,7 @@ void AbcWriteJob::setup(double iFrame, MayaTransformWriterPtr iParent, GetMember
     }
     else if (ob.hasFn(MFn::kInstancer))
     {
-        MFnInstancer fnInst(ob, &status);
+        MFnInstancer fnInst(mCurDag, &status);
         if (status != MS::kSuccess)
         {
             MString msg = "Initialize instancer node ";
@@ -457,19 +464,49 @@ void AbcWriteJob::setup(double iFrame, MayaTransformWriterPtr iParent, GetMember
         MDagPath instDag(mCurDag);
         for (unsigned int iPath = 0; iPath < numPaths; ++iPath)
         {
-            mCurDag = instancePaths[iPath];
-            MayaTransformWriterPtr parent;
-            // Find the dagPath to see if it's exported
+            // Traverse path upwards until we find an exported ancestor or root
+            MDagPath itDag = instancePaths[iPath];
+            std::vector<MDagPath> hierachy;
+            auto foundDag = mExportedDags.end();
+            unsigned int length = itDag.length();
+            while (length-- && (foundDag = mExportedDags.find(itDag)) == mExportedDags.end())
+            {
+                MString itDagName = itDag.partialPathName(&status);
+                // Store all the dags into a list
+                hierachy.push_back(itDag);
+                status = itDag.pop();
+            }
 
-            // Find if any parent of the instance has been exported and put it in parent
-            setup(iFrame, parent, gmMap);
+            // Fix excludeInvisible to false
+            bool orig_excludeInvisible = mArgs.excludeInvisible;
+            bool orig_writeVisibility = mArgs.writeVisibility;
+            mArgs.excludeInvisible = false;
+            mArgs.writeVisibility = true;
+            
+            MDagPath instancerDag = mCurDag;
+            MayaTransformWriterPtr parent = (foundDag == mExportedDags.end() ? MayaTransformWriterPtr() : foundDag->second.mTransformWriter);
+            // Traverse the list exporting all of them, including the instanced dag
+            for (auto rit = hierachy.rbegin(); rit != hierachy.rend(); ++rit)
+            {
+                mCurDag = (*rit);
+                setup(iFrame, parent, gmMap);
+                parent = mExportedDags.find(mCurDag)->second.mTransformWriter;
+            }
+            // Restore mCurDag
+            mCurDag = instancerDag;
+            // Restore excludeInvisible to original value
+            mArgs.excludeInvisible = orig_excludeInvisible;
+            mArgs.writeVisibility = orig_writeVisibility;
         }
 
         Alembic::Abc::OObject obj = (iParent == NULL ? mRoot.getTop() : iParent->getObject());
       
+        
         MayaInstancerWriterPtr inst = MayaInstancerWriterPtr(new MayaInstancerWriter(
-                mCurDag, obj, mShapeTimeIndex, mArgs, gmMap));
-		mExportedDags.insert(std::make_pair(mCurDag, inst->GetAlembicObject()));
+                mCurDag, obj, mShapeTimeIndex, mArgs, gmMap, mExportedDags));
+        mExportedDags[mCurDag] = ExportedDagInfo(inst->GetAlembicObject(), NULL);
+        //ExportedDagInfo dagInfo(inst->GetAlembicObject(), NULL);
+        //mExportedDags.insert(std::make_pair(mCurDag, dagInfo));
         //mExportedDags[mCurDag] = inst->GetAlembicObject();
 
         if (inst->isAnimated() && mShapeTimeIndex != 0)
@@ -510,7 +547,8 @@ void AbcWriteJob::setup(double iFrame, MayaTransformWriterPtr iParent, GetMember
             trans = MayaTransformWriterPtr(new MayaTransformWriter(
                 *iParent, mCurDag, mTransTimeIndex, mArgs));
         }
-		mExportedDags.insert(std::make_pair(mCurDag, trans->getObject()));
+        mExportedDags[mCurDag] = ExportedDagInfo(trans->getObject(), trans);
+        //mExportedDags.insert(std::make_pair(mCurDag, ExportedDagInfo(trans->getObject(), trans)));
 
         if (trans->isAnimated() && mTransTimeIndex != 0)
         {
@@ -553,7 +591,8 @@ void AbcWriteJob::setup(double iFrame, MayaTransformWriterPtr iParent, GetMember
             Alembic::Abc::OObject obj = iParent->getObject();
             MayaLocatorWriterPtr locator(new MayaLocatorWriter(
                 mCurDag, obj, mShapeTimeIndex, mArgs));
-			mExportedDags.insert(std::make_pair(mCurDag, locator->GetAlembicObject()));
+            //mExportedDags.insert(std::make_pair(mCurDag, ExportedDagInfo(locator->GetAlembicObject(), NULL)));
+            mExportedDags[mCurDag] = ExportedDagInfo(locator->GetAlembicObject(), NULL);
 
             if (locator->isAnimated() && mShapeTimeIndex != 0)
             {
@@ -593,7 +632,8 @@ void AbcWriteJob::setup(double iFrame, MayaTransformWriterPtr iParent, GetMember
             Alembic::Abc::OObject obj = iParent->getObject();
             MayaPointPrimitiveWriterPtr particle(new MayaPointPrimitiveWriter(
                 iFrame, mCurDag, obj, mShapeTimeIndex, mArgs));
-			mExportedDags.insert(std::make_pair(mCurDag, particle->GetAlembicObject()));
+            //mExportedDags.insert(std::make_pair(mCurDag, ExportedDagInfo(particle->GetAlembicObject(), NULL)));
+            mExportedDags[mCurDag] = ExportedDagInfo(particle->GetAlembicObject(), NULL);
 
             if (particle->isAnimated() && mShapeTimeIndex != 0)
             {
@@ -635,7 +675,8 @@ void AbcWriteJob::setup(double iFrame, MayaTransformWriterPtr iParent, GetMember
             Alembic::Abc::OObject obj = iParent->getObject();
             MayaMeshWriterPtr mesh(new MayaMeshWriter(mCurDag, obj,
                 mShapeTimeIndex, mArgs, gmMap));
-			mExportedDags.insert(std::make_pair(mCurDag, mesh->GetAlembicObject()));
+            mExportedDags[mCurDag] = ExportedDagInfo(mesh->GetAlembicObject(), NULL);
+            //mExportedDags.insert(std::make_pair(mCurDag, ExportedDagInfo(mesh->GetAlembicObject(), NULL)));
 
             if (mesh->isAnimated() && mShapeTimeIndex != 0)
             {
@@ -697,7 +738,8 @@ void AbcWriteJob::setup(double iFrame, MayaTransformWriterPtr iParent, GetMember
             Alembic::Abc::OObject obj = iParent->getObject();
             MayaCameraWriterPtr camera(new MayaCameraWriter(
                 mCurDag, obj, mShapeTimeIndex, mArgs));
-			mExportedDags.insert(std::make_pair(mCurDag, camera->GetAlembicObject()));
+            mExportedDags[mCurDag] = ExportedDagInfo(camera->GetAlembicObject(), NULL);
+            //mExportedDags.insert(std::make_pair(mCurDag, ExportedDagInfo(camera->GetAlembicObject(), NULL)));
 
             if (camera->isAnimated() && mShapeTimeIndex != 0)
             {
@@ -735,7 +777,8 @@ void AbcWriteJob::setup(double iFrame, MayaTransformWriterPtr iParent, GetMember
             Alembic::Abc::OObject obj = iParent->getObject();
             MayaNurbsSurfaceWriterPtr nurbsSurface(new MayaNurbsSurfaceWriter(
                 mCurDag, obj,  mShapeTimeIndex, mArgs));
-			mExportedDags.insert(std::make_pair(mCurDag, nurbsSurface->GetAlembicObject()));
+            mExportedDags[mCurDag] = ExportedDagInfo(nurbsSurface->GetAlembicObject(), NULL);
+            //mExportedDags.insert(std::make_pair(mCurDag, ExportedDagInfo(nurbsSurface->GetAlembicObject(), NULL)));
 
             if (nurbsSurface->isAnimated() && mShapeTimeIndex != 0)
             {
@@ -777,7 +820,8 @@ void AbcWriteJob::setup(double iFrame, MayaTransformWriterPtr iParent, GetMember
             Alembic::Abc::OObject obj = iParent->getObject();
             MayaNurbsCurveWriterPtr nurbsCurve(new MayaNurbsCurveWriter(
                 mCurDag, obj, mShapeTimeIndex, false, mArgs));
-			mExportedDags.insert(std::make_pair(mCurDag, nurbsCurve->GetAlembicObject()));
+            mExportedDags[mCurDag] = ExportedDagInfo(nurbsCurve->GetAlembicObject(), NULL);
+            //mExportedDags.insert(std::make_pair(mCurDag, ExportedDagInfo(nurbsCurve->GetAlembicObject(), NULL)));
 
             if (nurbsCurve->isAnimated() && mShapeTimeIndex != 0)
             {
@@ -940,7 +984,7 @@ bool AbcWriteJob::eval(double iFrame)
 
 			std::vector< MayaInstancerWriterPtr >::iterator instIt, instEnd;
 			instEnd = mInstancerList.end();
-			for (instEnd = mInstancerList.begin(); instIt != instEnd; instIt++)
+            for (instIt = mInstancerList.begin(); instIt != instEnd; instIt++)
 			{
 				(*instIt)->write();
 				mStats.mInstancerAnimNum += (*instIt)->getNumCVs();

@@ -205,7 +205,7 @@ class AbcWriteJob
     std::map< MDagPath, util::ShapeSet, util::cmpDag > mBBoxShapeMap;
 
 	// Association between exported Dags and Alembic Objects
-	std::map< MDagPath, Alembic::Abc::OObject, util::cmpDag> mExportedDags;
+    ExportedDagsMap mExportedDags;
 
     // helper dag path for recursive calculations
     MDagPath mCurDag;

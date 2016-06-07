@@ -26,6 +26,9 @@ void addTranslate(const MFnDependencyNode & iTrans,
     Alembic::Util::uint8_t iHint, bool inverse, bool forceStatic,
     bool forceAnimated, Alembic::AbcGeom::XformSample & oSample,
     std::vector < AnimChan > & oAnimChanList);
+void addTranslate(const MMatrix& matrix, Alembic::Util::uint8_t iHint,
+    bool inverse, bool forceStatic,
+    bool forceAnimated, Alembic::AbcGeom::XformSample & oSample);
 
 // names need to be passed in x,y,z order, iOrder is the order to
 // use these indices
@@ -34,6 +37,10 @@ void addRotate(const MFnDependencyNode & iTrans,
     Alembic::Util::uint8_t iHint, bool forceStatic, bool forceAnimated,
     Alembic::AbcGeom::XformSample & oSample,
     std::vector < AnimChan > & oAnimChanList,
+    size_t oOpIndex[3]);
+void addRotate(const MMatrix& matrix, Alembic::Util::uint8_t iHint,
+    bool inverse, bool forceStatic,
+    bool forceAnimated, Alembic::AbcGeom::XformSample & oSample,
     size_t oOpIndex[3]);
 
 // the test on whether or not to add it is very similar to addTranslate
@@ -48,6 +55,10 @@ void addScale(const MFnDependencyNode & iTrans,
     MString parentName, MString xName, MString yName, MString zName, bool inverse,
     bool forceStatic, bool forceAnimated, Alembic::AbcGeom::XformSample & oSample,
     std::vector < AnimChan > & oAnimChanList);
+
+void addScale(const MMatrix& matrix,
+    bool inverse,
+    bool forceStatic, bool forceAnimated, Alembic::AbcGeom::XformSample & oSample);
 
 bool getSampledRotation(const Alembic::AbcGeom::XformSample& sample,
     const size_t opIndex[3], double& xx, double& yy, double& zz);

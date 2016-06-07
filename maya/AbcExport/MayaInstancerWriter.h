@@ -2,6 +2,7 @@
 #define __MAYA_INSTANCER_WRITER_H__
 
 #include "MayaMeshWriter.h"
+#include "MayaTransformWriter.h"
 #include "TransformUtility.h"
 
 class MayaInstancerWriter
@@ -10,7 +11,7 @@ public:
 
     MayaInstancerWriter(MDagPath & iDag, Alembic::Abc::OObject & iParent,
         Alembic::Util::uint32_t iTimeIndex, const JobArgs & iArgs,
-        GetMembersMap& gmMap);
+        GetMembersMap& gmMap, const ExportedDagsMap& xpDagMap);
     void write();
     bool isAnimated() const;
     unsigned int getNumCVs();
@@ -19,7 +20,8 @@ public:
 private:
 
     void AddInstances(Alembic::Abc::OObject & iParent, Alembic::Util::uint32_t iTimeIndex,
-        const JobArgs & iArgs, GetMembersMap& gmMap);
+        const JobArgs & iArgs, GetMembersMap& gmMap, const ExportedDagsMap& xpDagMap);
+    void pushTransformStack(const MMatrix & matrix, Alembic::AbcGeom::XformSample& sample);
     void pushTransformStack(const MFnTransform & iTrans, bool iForceStatic);
 
     bool mIsGeometryAnimated;
@@ -29,6 +31,8 @@ private:
     Alembic::AbcGeom::OXformSchema mSchema;
 
     Alembic::AbcGeom::XformSample mSample;
+    std::vector<Alembic::AbcGeom::XformSample> mInstanceSamples;
+    std::vector<Alembic::AbcGeom::OXformSchema> mInstanceSchemas;
 
     std::vector < AnimChan > mAnimChanList;
     MPlug mInheritsPlug;
