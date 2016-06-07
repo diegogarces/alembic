@@ -90,4 +90,16 @@ class MayaTransformWriter
 typedef Alembic::Util::shared_ptr < MayaTransformWriter >
     MayaTransformWriterPtr;
 
+struct ExportedDagInfo
+{
+    ExportedDagInfo() {}
+    ExportedDagInfo(Alembic::Abc::OObject alembicObject, const MayaTransformWriterPtr& trans) :
+        mAlembicObject(alembicObject), mTransformWriter(trans) {}
+    ExportedDagInfo(Alembic::Abc::OObject alembicObject) :
+        mAlembicObject(alembicObject) {}
+    Alembic::Abc::OObject mAlembicObject;
+    MayaTransformWriterPtr mTransformWriter; // valid if it's a transform (used for parenting purposes)
+};
+typedef std::map< MDagPath, ExportedDagInfo, util::cmpDag> ExportedDagsMap;
+
 #endif  // _AlembicExport_MayaTransformWriter_h_

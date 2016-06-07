@@ -1,9 +1,10 @@
 #include "MayaInstancerWriter.h"
+#include "AbcWriteJob.h"
 #include <maya/MMatrixArray.h>
 
 MayaInstancerWriter::MayaInstancerWriter(MDagPath & iDag,
     Alembic::Abc::OObject & iParent, Alembic::Util::uint32_t iTimeIndex,
-    const JobArgs & iArgs, GetMembersMap& gmMap)
+    const JobArgs & iArgs, GetMembersMap& gmMap, const ExportedDagsMap& xpDagMap)
     : mIsGeometryAnimated(false),
     mDagPath(iDag)
 {
@@ -73,8 +74,6 @@ MayaInstancerWriter::MayaInstancerWriter(MDagPath & iDag,
         {
             mSchema.setTimeSampling(0);
         }
-
-        
     }
     else
     {
@@ -138,7 +137,7 @@ MayaInstancerWriter::MayaInstancerWriter(MDagPath & iDag,
     }
 
     // Add Child Transforms and instances
-    AddInstances(obj, iTimeIndex, iArgs, gmMap);
+    AddInstances(obj, iTimeIndex, iArgs, gmMap, xpDagMap);
 
     // everything is default, don't write anything
     if (mSample.getNumOps() > 0 || mSample.getInheritsXforms())
@@ -154,11 +153,12 @@ void MayaInstancerWriter::write()
 }
 
 void MayaInstancerWriter::AddInstances(Alembic::Abc::OObject & iParent, Alembic::Util::uint32_t iTimeIndex,
-    const JobArgs & iArgs, GetMembersMap& gmMap)
+    const JobArgs & iArgs, GetMembersMap& gmMap, const ExportedDagsMap& xpDagMap)
 {
     MStatus status;
     // Get all the instances
     MFnInstancer fnInstancer(mDagPath, &status);
+    MMatrix invInstancerMat = mDagPath.inclusiveMatrixInverse(&status);
     unsigned int numInstances = fnInstancer.particleCount();
     MDagPathArray instancePaths;
     MMatrixArray instanceMatrices;
@@ -167,6 +167,8 @@ void MayaInstancerWriter::AddInstances(Alembic::Abc::OObject & iParent, Alembic:
     status = fnInstancer.allInstances(instancePaths, instanceMatrices, instancePathStartIndices, pathIndices);
     assert(instancePathStartIndices.length() - 1 == numInstances);
 
+    mInstanceSamples.resize(numInstances);
+    mInstanceSchemas.reserve(numInstances);
     for (unsigned int iInstance = 0; iInstance < numInstances; ++iInstance)
     {
         unsigned int startIndex = instancePathStartIndices[iInstance];
@@ -177,11 +179,21 @@ void MayaInstancerWriter::AddInstances(Alembic::Abc::OObject & iParent, Alembic:
         instanceName += iInstance;
         Alembic::AbcGeom::OXform obj(iParent, instanceName.asChar(),
             iTimeIndex);
+        mInstanceSchemas.push_back(obj.getSchema());
         //Alembic::AbcGeom::OXformSchema  instanceSchema = obj.getSchema();
 
         // Add the transformation
-        const MMatrix& instanceMatrix = instanceMatrices[iInstance];
-        // DGC: TODO
+        MMatrix instanceMatrix = instanceMatrices[iInstance] * invInstancerMat;
+        
+        // This includes the instancer transformation
+        // To obtain the final position of the instance, this matrix has to be multiplied
+        // by the instance transform
+        const MDagPath& firstdagInstance = instancePaths[pathIndices[startIndex]];
+        MMatrix instancedDagMatrix = firstdagInstance.inclusiveMatrix(&status);
+        instancedDagMatrix *= instanceMatrix;
+        pushTransformStack(instancedDagMatrix, mInstanceSamples[iInstance]);
+        
+        // DGC: COMPLETE
 
         // Add the instance
         unsigned int endIndex = instancePathStartIndices[iInstance + 1];
@@ -193,11 +205,22 @@ void MayaInstancerWriter::AddInstances(Alembic::Abc::OObject & iParent, Alembic:
             MString instanceDagName = instanceDagPath.partialPathName();
 
             Alembic::Abc::OObject iTarget;
-            // DGC: TODO get the target: HOW?????
+            auto it = xpDagMap.find(instanceDagPath);
+            if (it != xpDagMap.end())
+            {
+                // Found the instanced node
+                iTarget = it->second.mAlembicObject;
+            }
+            else
+            {
+                fprintf(stderr, "Instanced node %s not found, invalid child instanced added", instanceDagPath.partialPathName().asChar());
+            }
+
             MString instanceShapeName = "InstanceShape";
             instanceShapeName += i;
             obj.addChildInstance(iTarget, instanceShapeName.asChar());
-        }   
+        }
+        mInstanceSchemas[iInstance].set(mInstanceSamples[iInstance]);
     }
 }
 
@@ -218,9 +241,12 @@ unsigned int MayaInstancerWriter::getNumCVs()
     return fnInstancer.particleCount();
 }
 
-void MayaInstancerWriter::pushTransformStack(const MMatrix & matrix)
+void MayaInstancerWriter::pushTransformStack(const MMatrix & matrix, Alembic::AbcGeom::XformSample& sample)
 {
-
+    // DGC: COMPLETE
+    addTranslate(matrix, Alembic::AbcGeom::kTranslateHint, false, false, false, sample);
+    addRotate(matrix, Alembic::AbcGeom::kRotateHint, false, false, false, sample, mRotateAxisOpIndex);
+    addScale(matrix, false, false, false, sample);
 }
 
 void MayaInstancerWriter::pushTransformStack(const MFnTransform & iTrans,

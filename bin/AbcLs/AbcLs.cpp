@@ -549,6 +549,7 @@ void visit( AbcG::IObject iObj,
             bool values = false )
 
 {
+    std::string iObjName = iObj.getName();
     Abc::ICompoundProperty props = iObj.getProperties();
 
     // header
@@ -560,7 +561,17 @@ void visit( AbcG::IObject iObj,
 
     // children
     for( size_t c = 0; c < iObj.getNumChildren(); ++c ) {
-        printChild( iObj, iObj.getChild( c ), all, long_list, meta, values );
+        AbcG::IObject iChild = iObj.getChild(c);
+        std::string iChildName = iChild.getName();
+        bool instance = iChild.isInstanceRoot();
+        int numChildProps = 0;
+        if (instance)
+        {
+            auto childProps = iChild.getInstancePtr()->getProperties();
+            numChildProps = childProps->getNumProperties();
+        }
+        std::string instanceName = iChild.instanceSourcePath();
+        printChild( iObj, iChild, all, long_list, meta, values );
     }
 
     // properties

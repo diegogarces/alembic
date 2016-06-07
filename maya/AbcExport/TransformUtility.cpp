@@ -1,6 +1,43 @@
 #include "TransformUtility.h"
 #include "MayaUtility.h"
 
+void addTranslate(const MMatrix& matrix, Alembic::Util::uint8_t iHint,
+    bool inverse, bool forceStatic,
+    bool forceAnimated, Alembic::AbcGeom::XformSample & oSample)
+{
+    MStatus status;
+
+    Alembic::AbcGeom::XformOp op(Alembic::AbcGeom::kTranslateOperation, iHint);
+
+    unsigned int xSamp, ySamp, zSamp;
+
+    xSamp = ySamp = zSamp = 0;
+    MTransformationMatrix transMatrix(matrix);
+    MVector translation = transMatrix.getTranslation(MSpace::kTransform, &status);
+    
+
+
+
+    // something is sampled or not identity, add it to the stack
+    if (xSamp != 0 || ySamp != 0 || zSamp != 0 || translation.x != 0.0 || translation.y != 0.0 ||
+        translation.z != 0.0)
+    {
+        if (inverse)
+        {
+            translation = -translation;
+        }
+
+        op.setChannelValue(0, translation.x);
+        op.setChannelValue(1, translation.y);
+        op.setChannelValue(2, translation.z);
+
+        // Add to channel list if animated
+        // DGC: TODO
+
+        oSample.addOp(op);
+    }
+}
+
 void addTranslate(const MFnDependencyNode & iTrans,
     MString parentName, MString xName, MString yName, MString zName,
     Alembic::Util::uint8_t iHint, bool inverse, bool forceStatic,
@@ -114,6 +151,74 @@ void addTranslate(const MFnDependencyNode & iTrans,
         }
 
         oSample.addOp(op);
+    }
+}
+
+void addRotate(const MMatrix& matrix, Alembic::Util::uint8_t iHint,
+    bool inverse, bool forceStatic,
+    bool forceAnimated, Alembic::AbcGeom::XformSample & oSample,
+    size_t oOpIndex[3])
+{
+    MStatus status;
+
+    Alembic::AbcGeom::XformOp op(Alembic::AbcGeom::kTranslateOperation, iHint);
+
+    unsigned int xSamp, ySamp, zSamp;
+
+    xSamp = ySamp = zSamp = 0;
+    MTransformationMatrix transMatrix(matrix);
+    MTransformationMatrix::RotationOrder rotOrder;
+    double rotation[3];
+    transMatrix.getRotation(rotation, rotOrder);
+    unsigned int iOrder[3];
+    util::getRotOrder(rotOrder, iOrder[0], iOrder[1],
+        iOrder[2]);
+    
+    // for each possible rotation axis
+    static const Alembic::AbcGeom::XformOperationType rots[3] = {
+        Alembic::AbcGeom::kRotateXOperation,
+        Alembic::AbcGeom::kRotateYOperation,
+        Alembic::AbcGeom::kRotateZOperation
+    };
+
+    // whether we are using the XYZ rotation order
+    bool isXYZ = rotOrder == MTransformationMatrix::kXYZ;
+
+    // add them in backwards since we are dealing with a stack
+    int i = 2;
+    for (; i > -1; i--)
+    {
+        unsigned int index = iOrder[i];
+        int samp = 0;
+        if (!forceStatic)
+        {
+            if (!forceAnimated)
+                samp = 0; // DGC: TODO find out if it's animated or curve
+            else
+                samp = 1;
+        }
+
+        double plugVal = rotation[index];
+
+
+        Alembic::AbcGeom::XformOp op(rots[index], iHint);
+        op.setChannelValue(0, Alembic::AbcGeom::RadiansToDegrees(plugVal));
+
+        // the sampled case
+        if (samp != 0)
+        {
+            //AnimChan chan;
+            //chan.plug = plug;
+            //chan.scale = Alembic::AbcGeom::RadiansToDegrees(1.0);
+            //chan.opNum = oSample.getNumOps();
+            //chan.channelNum = 0;
+            //oAnimChanList.push_back(chan);
+        }
+        // non sampled, XYZ axis and the angle is 0, do not add to the stack
+        else if (isXYZ && plugVal == 0.0)
+            continue;
+
+        oOpIndex[index] = oSample.addOp(op);
     }
 }
 
@@ -399,6 +504,41 @@ void addScale(const MFnDependencyNode & iTrans,
             oAnimChanList.push_back(chan);
         }
 
+        oSample.addOp(op);
+    }
+}
+
+void addScale(const MMatrix& matrix,
+    bool inverse,
+    bool forceStatic, bool forceAnimated, Alembic::AbcGeom::XformSample & oSample)
+{
+    MTransformationMatrix transMatrix(matrix);
+
+    Alembic::AbcGeom::XformOp op(Alembic::AbcGeom::kScaleOperation,
+        Alembic::AbcGeom::kScaleHint);
+
+    double scaleVal[3];
+    MStatus status = transMatrix.getScale(scaleVal, MSpace::kTransform);
+    int xSamp = 0;
+    int ySamp = 0;
+    int zSamp = 0;
+
+    // something is sampled or not identity, add it to the stack
+    if (xSamp != 0 || ySamp != 0 || zSamp != 0 || scaleVal[0] != 1.0 || scaleVal[1] != 1.0 ||
+        scaleVal[2] != 1.0)
+    {
+        if (inverse)
+        {
+            scaleVal[0] = util::inverseScale(scaleVal[0]);
+            scaleVal[1] = util::inverseScale(scaleVal[1]);
+            scaleVal[2] = util::inverseScale(scaleVal[2]);
+        }
+
+        op.setChannelValue(0, scaleVal[0]);
+        op.setChannelValue(1, scaleVal[1]);
+        op.setChannelValue(2, scaleVal[2]);
+    
+        // DGC: TODO store the animation channel
         oSample.addOp(op);
     }
 }
