@@ -152,10 +152,110 @@ void MayaInstancerWriter::write()
 
 }
 
+
+void GetParticleData(MDagPath &dagPath, bool exportParticleID, MStringArray& extraAttrs, MIntArray& partIds, MVectorArray& velocities,
+    std::map<std::string, MDoubleArray >& doubleAttrs, std::map<std::string, MVectorArray >& vectorAttrs, std::map<std::string, MIntArray >& intAttrs)
+{
+    MStatus status;
+
+    // Get Particle shape
+    MPlugArray conn;
+    // the particleShape attached
+    MFnDependencyNode depNodeInstancer(dagPath.node());
+
+    MPlug inputPointsPlug = depNodeInstancer.findPlug("inputPoints");
+    inputPointsPlug.connectedTo(conn, true, false);
+
+    MObject inputPointsData = inputPointsPlug.attribute();
+
+    // inputPoints is not an array, so position [0] is the particleShape node
+    MObject particleShape = conn[0].node();
+
+    // Get Particle Ids and Velocities from particles
+    
+    MFnParticleSystem fnParticleSystem(particleShape);
+    fnParticleSystem.particleIds(partIds);
+    fnParticleSystem.velocity(velocities);
+
+    doubleAttrs.clear();
+    vectorAttrs.clear();
+    intAttrs.clear();
+
+    if (extraAttrs.length() == 0)
+    {
+        // Try to fill with arnold attribute
+        // For now, get the same attributes from the aiExportAttributes
+        // DGC: Use the list of required attributes from alembic??
+        MString customAttrs = fnParticleSystem.findPlug("aiExportAttributes").asString();
+
+        // std::cout << "[mtoa] Particle instancer custom attributes: " <<  m_customAttrs << std::endl;
+
+        status = customAttrs.split(' ', extraAttrs);
+    }
+
+    // we have to do this no matter if we have particles or not..
+    for (unsigned int i = 0; i < extraAttrs.length(); i++)
+    {
+        MString currentAttr = extraAttrs[i];
+
+        if (currentAttr == "particleId")
+        {
+            exportParticleID = true;
+            continue;
+        }
+
+        fnParticleSystem.findPlug(currentAttr, &status);
+        if (status != MS::kSuccess)
+            continue;
+
+        //check the type of the plug
+        if (fnParticleSystem.isPerParticleDoubleAttribute(currentAttr))
+        {
+            MDoubleArray doubleAttribute;
+            fnParticleSystem.getPerParticleAttribute(currentAttr, doubleAttribute);
+            doubleAttrs[currentAttr.asChar()] = doubleAttribute;
+            continue;
+        }
+        else if (fnParticleSystem.isPerParticleVectorAttribute(currentAttr))
+        {
+            MVectorArray vectorAttribute;
+            fnParticleSystem.getPerParticleAttribute(currentAttr, vectorAttribute);
+            vectorAttrs[currentAttr.asChar()] = vectorAttribute;
+            continue;
+        }
+        else if (fnParticleSystem.isPerParticleIntAttribute(currentAttr))
+        {
+            MIntArray intAttribute;
+            fnParticleSystem.getPerParticleAttribute(currentAttr, intAttribute);
+            intAttrs[currentAttr.asChar()] = intAttribute;
+            continue;
+        }
+        else
+        {
+            continue;
+        }
+    }
+
+    if (exportParticleID)
+    {
+        intAttrs["particleId"] = partIds;
+    }
+}
+
 void MayaInstancerWriter::AddInstances(Alembic::Abc::OObject & iParent, Alembic::Util::uint32_t iTimeIndex,
     const JobArgs & iArgs, GetMembersMap& gmMap, const ExportedDagsMap& xpDagMap)
 {
     MStatus status;
+
+    MIntArray  partIds;
+    MVectorArray velocities;
+    std::map<std::string, MDoubleArray > doubleAttrs; std::map<std::string, MVectorArray > vectorAttrs; std::map<std::string, MIntArray > intAttrs;
+    MStringArray extraAttrs;
+    
+    GetParticleData(mDagPath, true, extraAttrs, partIds, velocities, doubleAttrs, vectorAttrs, intAttrs);
+    
+
+
     // Get all the instances
     MFnInstancer fnInstancer(mDagPath, &status);
     MMatrix invInstancerMat = mDagPath.inclusiveMatrixInverse(&status);
@@ -172,6 +272,7 @@ void MayaInstancerWriter::AddInstances(Alembic::Abc::OObject & iParent, Alembic:
     for (unsigned int iInstance = 0; iInstance < numInstances; ++iInstance)
     {
         unsigned int startIndex = instancePathStartIndices[iInstance];
+        int particleID = partIds[iInstance];
 
         // Create a OXform
         // Create the alembic object
@@ -220,6 +321,39 @@ void MayaInstancerWriter::AddInstances(Alembic::Abc::OObject & iParent, Alembic:
             instanceShapeName += i;
             obj.addChildInstance(iTarget, instanceShapeName.asChar());
         }
+
+        // DGC: TODO: Add properties for this custom attrs and partIds. REference AttributesWriter::AttributesWriter
+        auto userProps = mInstanceSchemas[iInstance].getUserProperties();
+        for (auto it = doubleAttrs.begin(); it != doubleAttrs.end(); ++it)
+        {
+            const std::string& attrName = it->first;
+            double attrValuePP = it->second[iInstance];
+
+            auto prop = Alembic::Abc::ODoubleProperty(userProps, attrName, iTimeIndex);
+            prop.set(attrValuePP);
+        }
+
+        for (auto it = intAttrs.begin(); it != intAttrs.end(); ++it)
+        {
+            const std::string& attrName = it->first;
+            int attrValuePP = it->second[iInstance];
+
+            auto prop = Alembic::Abc::OInt32Property(userProps, attrName, iTimeIndex);
+            prop.set(attrValuePP);
+        }
+
+        for (auto it = vectorAttrs.begin(); it != vectorAttrs.end(); ++it)
+        {
+            const std::string& attrName = it->first;
+            MVector attrValuePP = it->second[iInstance];
+            double attrValue[3];
+            attrValuePP.get(attrValue);
+            Imath::V3d mathValue(attrValue[0], attrValue[1], attrValue[2]);
+            
+            auto prop = Alembic::Abc::OV3dProperty(userProps, attrName, iTimeIndex);
+            prop.set(mathValue);
+        }
+
         mInstanceSchemas[iInstance].set(mInstanceSamples[iInstance]);
     }
 }
