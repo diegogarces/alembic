@@ -136,6 +136,12 @@ MayaInstancerWriter::MayaInstancerWriter(MDagPath & iDag,
         }
     }
 
+    // Child bounds
+    auto childBoundsProperty = mSchema.getChildBoundsProperty();
+    MBoundingBox bbox = fnInstancer.boundingBox(&status);
+    Imath::Box<Imath::V3d> bboxProp(Imath::V3d(bbox.min().x, bbox.min().y, bbox.min().z), Imath::V3d(bbox.max().x, bbox.max().y, bbox.max().z));
+    childBoundsProperty.set(bboxProp);
+
     // Add Child Transforms and instances
     AddInstances(obj, iTimeIndex, iArgs, gmMap, xpDagMap);
 
