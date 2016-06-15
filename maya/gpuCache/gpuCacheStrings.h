@@ -148,6 +148,9 @@
 #define kReadMeshErrorMsg MStringResourceId(kPluginId, "kReadMeshErrorMsg",\
                  "Error occurred when reading mesh: ^1s, ^2s. Reason: ^3s")
 
+#define kReadPivotsErrorMsg MStringResourceId(kPluginId, "kReadPivotErrorMsg",\
+                 "Error occurred when reading pivots of mesh: ^1s, ^2s. Reason: ^3s")
+
 #define kCloseFileErrorMsg MStringResourceId(kPluginId, "kCloseFileErrorMsg",\
                  "Error occurred when closing file: ^1s. Reason: ^2s")
 
