@@ -3306,6 +3306,12 @@ SubNode::Ptr AlembicCacheReader::readHierarchyInternal(const MString& geomPath, 
         // The sub-node hierarchy with bounding box place holders.
         SubNode::Ptr top = reader->get();
 
+        if (!Alembic::AbcGeom::IXform::matches(current.getHeader()))
+        {
+            // If root is a placeholder (there's not a single root node), use the first child to get the pivot
+            DisplayWarning(kReadPivotsErrorMsg, fFile.resolvedFullName(), geomPath, "There's not a single root node, using the first child to read pivots");
+            current = current.getChild(0);
+        }
         pivots = readPivots(current);
 
         // Save the object readers for reuse.
