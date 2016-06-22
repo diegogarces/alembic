@@ -21,6 +21,9 @@ private:
 
     void AddInstances(Alembic::Abc::OObject & iParent, Alembic::Util::uint32_t iTimeIndex,
         const JobArgs & iArgs, GetMembersMap& gmMap, const ExportedDagsMap& xpDagMap);
+
+    void writeInstances();
+
     void pushTransformStack(const MMatrix & matrix, Alembic::AbcGeom::XformSample& sample);
     void pushTransformStack(const MFnTransform & iTrans, bool iForceStatic);
 
@@ -35,6 +38,7 @@ private:
     std::vector<Alembic::AbcGeom::OXformSchema> mInstanceSchemas;
 
     std::vector < AnimChan > mAnimChanList;
+    bool mPositionsCached;
     MPlug mInheritsPlug;
 
     bool mFilterEulerRotations;

@@ -105,6 +105,7 @@
     <ClInclude Include="gpuCache\gpuCacheVramQuery.h">
       <Filter>Headers</Filter>
     </ClInclude>
+    <ClInclude Include="gpuCache\gpuCacheInterface.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="gpuCache\CacheAlembicUtil.cpp" />

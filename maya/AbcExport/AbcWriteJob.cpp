@@ -990,7 +990,7 @@ bool AbcWriteJob::eval(double iFrame)
 			instEnd = mInstancerList.end();
             for (instIt = mInstancerList.begin(); instIt != instEnd; instIt++)
 			{
-				(*instIt)->write();
+                (*instIt)->write();
 				mStats.mInstancerAnimNum += (*instIt)->getNumCVs();
 			}
 

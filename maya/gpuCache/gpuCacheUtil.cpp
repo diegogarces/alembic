@@ -352,24 +352,24 @@ MColor ShadedModeColor::evaluateColor(
     }
 }
 
-MTime GetShapeCurrentTime(const ShapeNode* shape)
-{
-    MStatus stat;
-    MFnDependencyNode depShape(shape->thisMObject());
-    MPlug pTime = depShape.findPlug(ShapeNode::aCacheTime, &stat);
-	
-
-    if (stat)
-	{
-		MTime pMtime = pTime.asMTime();
-		MPlug pOffset = depShape.findPlug(ShapeNode::aOffsetTime, &stat);
-		if(stat)
-			pMtime += pOffset.asMTime();
-		return pMtime;
-	}
-
-    return MAnimControl::currentTime();
-}
+//MTime GetShapeCurrentTime(const MObject& shape)
+//{
+//    MStatus stat;
+//    MFnDependencyNode depShape(shape);
+//    MPlug pTime = depShape.findPlug(ShapeNode::aCacheTime, &stat);
+//	
+//
+//    if (stat)
+//	{
+//		MTime pMtime = pTime.asMTime();
+//		MPlug pOffset = depShape.findPlug(ShapeNode::aOffsetTime, &stat);
+//		if(stat)
+//			pMtime += pOffset.asMTime();
+//		return pMtime;
+//	}
+//
+//    return MAnimControl::currentTime();
+//}
 
 } // namespace GPUCache
 
