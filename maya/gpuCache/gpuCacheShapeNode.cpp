@@ -1061,7 +1061,7 @@ void ShapeNode::applyPivotsDeffered(GPUCache::Pivots::Ptr pivots) const
 }
 
 bool ShapeNode::getEdgeSnapPoint(const MPoint &rayPointSrc, const MVector &rayDirectionSrc, MPoint &theClosestPoint) {
-    const double seconds = GetShapeCurrentTime(this).as(MTime::kSeconds);
+    const double seconds = GetShapeCurrentTime(thisMObject()).as(MTime::kSeconds);
 	//const double seconds = MAnimControl::currentTime().as(MTime::kSeconds);
 	gpuCacheIsectAccelParams accelParams = gpuCacheIsectAccelParams::autoUniformGridParams(); 
 	unsigned int numAccels = getIntersectionAccelerator(accelParams, seconds);
@@ -1283,7 +1283,7 @@ MBoundingBox ShapeNode::boundingBox() const
     const SubNodeData::Ptr subNodeData = subNode->getData();
     if (!subNodeData) return MBoundingBox();
 
-    const double seconds = GetShapeCurrentTime(this).as(MTime::kSeconds);
+    const double seconds = GetShapeCurrentTime(thisMObject()).as(MTime::kSeconds);
     //const double seconds = MAnimControl::currentTime().as(MTime::kSeconds);
 
     // Handle transforms.
@@ -2117,7 +2117,7 @@ void ShapeUI::drawWireframe(const MDrawRequest & request, M3dView & view) const
     const SubNode::Ptr rootNode = node->getCachedGeometry();
     if (!rootNode) return;
 
-    const double seconds = GetShapeCurrentTime(node).as(MTime::kSeconds);
+    const double seconds = GetShapeCurrentTime(node->thisMObject()).as(MTime::kSeconds);
     //const double seconds = MAnimControl::currentTime().as(MTime::kSeconds);
 
     MMatrix projMatrix;
@@ -2190,7 +2190,7 @@ void ShapeUI::drawShaded(
     const SubNode::Ptr rootNode = node->getCachedGeometry();
     if (!rootNode) return;
 
-    const double seconds = GetShapeCurrentTime(node).as(MTime::kSeconds);
+    const double seconds = GetShapeCurrentTime(node->thisMObject()).as(MTime::kSeconds);
     //const double seconds = MAnimControl::currentTime().as(MTime::kSeconds);
 
     MMatrix projMatrix;
@@ -2462,7 +2462,7 @@ bool ShapeUI::select(
     const SubNode::Ptr rootNode = node->getCachedGeometry();
     if (!rootNode) { return false;}
 
-    const double seconds = GetShapeCurrentTime(node).as(MTime::kSeconds);
+    const double seconds = GetShapeCurrentTime(node->thisMObject()).as(MTime::kSeconds);
     //const double seconds = MAnimControl::currentTime().as(MTime::kSeconds);
 
     const bool boundingboxSelection =
@@ -2568,7 +2568,7 @@ bool ShapeUI::snap(MSelectInfo& snapInfo) const
     const SubNode::Ptr rootNode = node->getCachedGeometry();
     if (!rootNode) return false;
 
-    const double seconds = GetShapeCurrentTime(node).as(MTime::kSeconds);
+    const double seconds = GetShapeCurrentTime(node->thisMObject()).as(MTime::kSeconds);
     //const double seconds = MAnimControl::currentTime().as(MTime::kSeconds);
 
     M3dView view = snapInfo.view();

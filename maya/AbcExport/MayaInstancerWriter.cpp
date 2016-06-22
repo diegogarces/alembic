@@ -5,7 +5,7 @@
 MayaInstancerWriter::MayaInstancerWriter(MDagPath & iDag,
     Alembic::Abc::OObject & iParent, Alembic::Util::uint32_t iTimeIndex,
     const JobArgs & iArgs, GetMembersMap& gmMap, const ExportedDagsMap& xpDagMap)
-    : mIsGeometryAnimated(false),
+    : mIsGeometryAnimated(false), mPositionsCached(false),
     mDagPath(iDag)
 {
     mFilterEulerRotations = iArgs.filterEulerRotations;
@@ -155,7 +155,87 @@ MayaInstancerWriter::MayaInstancerWriter(MDagPath & iDag,
 
 void MayaInstancerWriter::write()
 {
+    bool transformAnimated = false;
+    size_t numSamples = mAnimChanList.size();
+    if (numSamples > 0)
+    {
+        transformAnimated = true;
+        std::vector < AnimChan >::iterator it, itEnd;
 
+        for (it = mAnimChanList.begin(), itEnd = mAnimChanList.end();
+            it != itEnd; ++it)
+        {
+            double val = it->plug.asDouble();
+
+            if (it->scale == -std::numeric_limits<double>::infinity())
+                val = util::inverseScale(val);
+            else if (it->scale != 1.0)
+                val *= it->scale;
+
+            mSample[it->opNum].setChannelValue(it->channelNum, val);
+        }
+
+        if (!mInheritsPlug.isNull())
+        {
+            mSample.setInheritsXforms(mInheritsPlug.asBool());
+        }
+
+        if (mFilterEulerRotations)
+        {
+            double xx(0), yy(0), zz(0);
+
+            if (getSampledRotation(mSample, mRotateOpIndex, xx, yy, zz))
+            {
+                MEulerRotation euler(xx, yy, zz, mPrevRotateSolution.order);
+                euler.setToClosestSolution(mPrevRotateSolution);
+
+                // update sample with new solution
+                setSampledRotation(mSample, mRotateOpIndex, euler.x, euler.y, euler.z);
+                mPrevRotateSolution = euler;
+            }
+
+            if (getSampledRotation(mSample, mRotateAxisOpIndex, xx, yy, zz))
+            {
+                MEulerRotation euler(xx, yy, zz, mPrevRotateAxisSolution.order);
+                euler.setToClosestSolution(mPrevRotateAxisSolution);
+
+                // update sample with new solution
+                setSampledRotation(mSample, mRotateAxisOpIndex, euler.x, euler.y, euler.z);
+                mPrevRotateAxisSolution = euler;
+            }
+        }
+    }
+
+    // Write animated particles
+    bool particlesAnimated = false;
+    {
+        // Get Particle shape
+        MPlugArray conn;
+        // the particleShape attached
+        MFnDependencyNode depNodeInstancer(mDagPath.node());
+
+        MPlug inputPointsPlug = depNodeInstancer.findPlug("inputPoints");
+        inputPointsPlug.connectedTo(conn, true, false);
+        // inputPoints is not an array, so position [0] is the particleShape node
+        MObject particleShape = conn[0].node();
+
+        MFnDependencyNode depNodeParticle(particleShape);
+        MPlugArray connParticle;
+        MPlug positionsPlug = depNodeParticle.findPlug("positions");
+        positionsPlug.connectedTo(connParticle, true, false);
+
+        if (connParticle.length() > 0)
+        {
+            particlesAnimated = true;
+            writeInstances();
+        }
+    }
+
+    // If something was animated, set sample. Otherwise, no need
+    if (transformAnimated || particlesAnimated)
+    {
+        mSchema.set(mSample);
+    }
 }
 
 
@@ -379,6 +459,84 @@ unsigned int MayaInstancerWriter::getNumCVs()
     }
 
     return fnInstancer.particleCount();
+}
+
+void MayaInstancerWriter::writeInstances()
+{
+    MStatus status;
+
+    MIntArray  partIds;
+    MVectorArray velocities;
+    std::map<std::string, MDoubleArray > doubleAttrs; std::map<std::string, MVectorArray > vectorAttrs; std::map<std::string, MIntArray > intAttrs;
+    MStringArray extraAttrs;
+
+    GetParticleData(mDagPath, true, extraAttrs, partIds, velocities, doubleAttrs, vectorAttrs, intAttrs);
+
+
+
+    // Get all the instances
+    MFnInstancer fnInstancer(mDagPath, &status);
+    MMatrix invInstancerMat = mDagPath.inclusiveMatrixInverse(&status);
+    unsigned int numInstances = fnInstancer.particleCount();
+    MDagPathArray instancePaths;
+    MMatrixArray instanceMatrices;
+    MIntArray instancePathStartIndices;
+    MIntArray pathIndices;
+    status = fnInstancer.allInstances(instancePaths, instanceMatrices, instancePathStartIndices, pathIndices);
+    assert(instancePathStartIndices.length() - 1 == numInstances);
+
+    for (unsigned int iInstance = 0; iInstance < numInstances; ++iInstance)
+    {
+        unsigned int startIndex = instancePathStartIndices[iInstance];
+        int particleID = partIds[iInstance];
+
+        // Add the transformation
+        MMatrix instanceMatrix = instanceMatrices[iInstance] * invInstancerMat;
+
+        // This includes the instancer transformation
+        // To obtain the final position of the instance, this matrix has to be multiplied
+        // by the instance transform
+        const MDagPath& firstdagInstance = instancePaths[pathIndices[startIndex]];
+        MMatrix instancedDagMatrix = firstdagInstance.inclusiveMatrix(&status);
+        instancedDagMatrix *= instanceMatrix;
+        pushTransformStack(instancedDagMatrix, mInstanceSamples[iInstance]);
+
+        // DGC: COMPLETE with properties animations
+
+        ////////// DGC: TODO: Add properties for this custom attrs and partIds. REference AttributesWriter::AttributesWriter
+        ////////auto userProps = mInstanceSchemas[iInstance].getUserProperties();
+        ////////for (auto it = doubleAttrs.begin(); it != doubleAttrs.end(); ++it)
+        ////////{
+        ////////    const std::string& attrName = it->first;
+        ////////    double attrValuePP = it->second[iInstance];
+
+        ////////    auto prop = Alembic::Abc::ODoubleProperty(userProps, attrName, iTimeIndex);
+        ////////    prop.set(attrValuePP);
+        ////////}
+
+        ////////for (auto it = intAttrs.begin(); it != intAttrs.end(); ++it)
+        ////////{
+        ////////    const std::string& attrName = it->first;
+        ////////    int attrValuePP = it->second[iInstance];
+
+        ////////    auto prop = Alembic::Abc::OInt32Property(userProps, attrName, iTimeIndex);
+        ////////    prop.set(attrValuePP);
+        ////////}
+
+        ////////for (auto it = vectorAttrs.begin(); it != vectorAttrs.end(); ++it)
+        ////////{
+        ////////    const std::string& attrName = it->first;
+        ////////    MVector attrValuePP = it->second[iInstance];
+        ////////    double attrValue[3];
+        ////////    attrValuePP.get(attrValue);
+        ////////    Imath::V3d mathValue(attrValue[0], attrValue[1], attrValue[2]);
+
+        ////////    auto prop = Alembic::Abc::OV3dProperty(userProps, attrName, iTimeIndex);
+        ////////    prop.set(mathValue);
+        ////////}
+
+        mInstanceSchemas[iInstance].set(mInstanceSamples[iInstance]);
+    }
 }
 
 void MayaInstancerWriter::pushTransformStack(const MMatrix & matrix, Alembic::AbcGeom::XformSample& sample)

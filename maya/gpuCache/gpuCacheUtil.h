@@ -43,6 +43,7 @@
     #define MStatAssert(status) ((void)status)
 #endif
 
+#include "gpuCacheInterface.h"
 
 namespace GPUCache {
 
@@ -1340,9 +1341,6 @@ inline void DisplayWarning(const MStringResourceId& id,
     msg.format(format, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9);
     DisplayWarning(msg);
 }
-
-class ShapeNode;
-MTime GetShapeCurrentTime(const ShapeNode* shape);
 
 } // namespace GPUCache
 

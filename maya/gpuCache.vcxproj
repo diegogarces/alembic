@@ -282,6 +282,7 @@ REM xcopy /y /s "$(ProjectDir)"deploy\mels\*.mel "$(MAYA_2015_DEV_USER_PATH)"\20
     <ClInclude Include="gpuCache\gpuCacheGeometry.h" />
     <ClInclude Include="gpuCache\gpuCacheGLFT.h" />
     <ClInclude Include="gpuCache\gpuCacheGLPickingSelect.h" />
+    <ClInclude Include="gpuCache\gpuCacheInterface.h" />
     <ClInclude Include="gpuCache\gpuCacheIsectUtil.h" />
     <ClInclude Include="gpuCache\gpuCacheMakeSharedHelper.h" />
     <ClInclude Include="gpuCache\gpuCacheMaterial.h" />
