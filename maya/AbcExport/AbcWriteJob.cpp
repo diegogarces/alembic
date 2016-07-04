@@ -284,7 +284,8 @@ MBoundingBox AbcWriteJob::getBoundingBox(double iFrame, const MMatrix & eMInvMat
                 else if (object.hasFn(MFn::kParticle)
                     || object.hasFn(MFn::kMesh)
                     || object.hasFn(MFn::kNurbsCurve)
-                    || object.hasFn(MFn::kNurbsSurface) )
+                    || object.hasFn(MFn::kNurbsSurface)
+					|| object.hasFn(MFn::kInstancer) )
                 {
                     if (util::isIntermediate(object))
                         continue;
