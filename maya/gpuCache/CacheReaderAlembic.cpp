@@ -2322,7 +2322,32 @@ void SubDSmoother::convertToPoly()
     }
 }
 
+bool IsInstancer(Alembic::Abc::IObject& abcObj)
+{
+    IXformSchema iSchema =
+        Alembic::AbcGeom::IXform(abcObj, Alembic::Abc::kWrapExisting).getSchema();
 
+    Alembic::Abc::ICompoundProperty userProps = iSchema.getUserProperties();
+    if (userProps.valid())
+    {
+        //int numChildren = userProps.getNumProperties();
+        //std::string test_name;
+        //if (numChildren > 0)
+        //{
+        //    const Alembic::AbcCoreAbstract::PropertyHeader& blah = userProps.getPropertyHeader(0);
+        //    test_name = blah.getName();
+        //}
+        const Alembic::AbcCoreAbstract::PropertyHeader* isInstancerPropHeader = userProps.getPropertyHeader("isInstancer");
+        if (isInstancerPropHeader)
+        {
+            Alembic::Abc::IBoolProperty isInstancerProp(userProps, "isInstancer");
+            Alembic::Abc::bool_t isInstancer(false);
+            isInstancerProp.get(isInstancer);
+            return isInstancer.asBool();
+        }
+    }
+    return false;
+}
 //==============================================================================
 // CLASS AlembicCacheObjectReader
 //==============================================================================
@@ -2342,8 +2367,17 @@ AlembicCacheObjectReader::create(Alembic::Abc::IObject& abcObj, bool needUVs)
 
     // or an xform...
     if (Alembic::AbcGeom::IXform::matches(abcObj.getHeader())) {
-        Ptr reader = boost::make_shared<AlembicCacheXformReader>(abcObj, needUVs);
-        return reader->valid() ? reader : Ptr();
+        // DGC: Add the instancer as a special case, doesn´t make sense to create a reader for each instance transform
+        if (IsInstancer(abcObj))
+        {
+            Ptr reader = boost::make_shared<AlembicCacheInstancerReader>(abcObj, needUVs);
+            return reader->valid() ? reader : Ptr();
+        }
+        else
+        {
+            Ptr reader = boost::make_shared<AlembicCacheXformReader>(abcObj, needUVs);
+            return reader->valid() ? reader : Ptr();
+        }
     }
 
     return Ptr();
@@ -2675,6 +2709,195 @@ void AlembicCacheXformReader::saveAndReset(AlembicCacheReader& cacheReader)
     BOOST_FOREACH (const AlembicCacheObjectReader::Ptr& childReader, fChildren) {
         childReader->saveAndReset(cacheReader);
     }
+}
+
+//==============================================================================
+// CLASS AlembicCacheInstancerReader
+//==============================================================================
+
+AlembicCacheInstancerReader::AlembicCacheInstancerReader(
+    Alembic::Abc::IObject object,
+    const bool needUVs
+    )
+    : fName(object.getName()),
+    fValidityInterval(TimeInterval::kInvalid),
+    fBoundingBoxValidityInterval(TimeInterval::kInvalid)
+{
+    // Shape schema
+    Alembic::AbcGeom::IXform       xformObj(object, Alembic::Abc::kWrapExisting);
+    Alembic::AbcGeom::IXformSchema schema = xformObj.getSchema();
+
+    // transform
+    fXformCache.init(schema);
+
+    // transform visibility
+    Alembic::AbcGeom::IVisibilityProperty visibility =
+        Alembic::AbcGeom::GetVisibilityProperty(object);
+    if (visibility) {
+        fVisibilityCache.init(visibility);
+    }
+
+    // transform childBounds
+    Alembic::Abc::IBox3dProperty childBoundsProperty = schema.getChildBoundsProperty();
+    if (childBoundsProperty) {
+        fChildBoundsCache.init(childBoundsProperty);
+    }
+
+    fXformData = XformData::create();
+
+    // Compute the exact animation time range
+    Alembic::Abc::TimeSamplingPtr timeSampling = schema.getTimeSampling();
+    size_t numSamples = schema.getNumSamples();
+
+    TimeInterval animTimeRange(
+        timeSampling->getSampleTime(0),
+        timeSampling->getSampleTime(numSamples > 0 ? numSamples - 1 : 0));
+
+    fXformData->setAnimTimeRange(animTimeRange);
+}
+
+AlembicCacheInstancerReader::~AlembicCacheInstancerReader()
+{}
+
+bool AlembicCacheInstancerReader::valid() const
+{
+    return fXformCache.valid();
+}
+
+TimeInterval AlembicCacheInstancerReader::sampleHierarchy(double seconds,
+    const MMatrix& rootMatrix, TimeInterval rootMatrixInterval)
+{
+    // Fill the sample if this sample has not been read
+    if (!fValidityInterval.contains(seconds)) {
+        fillTopoAndAttrSample(seconds);
+    }
+
+    // Inherit transformation
+    MMatrix newRootMatrix = fXformCache.getValue() * rootMatrix;
+    TimeInterval newRootMatrixInterval =
+        fXformCache.getValidityInterval() & rootMatrixInterval;
+
+
+    TimeInterval validityInterval = fValidityInterval;
+
+    MBoundingBox bbox;
+    TimeInterval bboxValIntrvl(TimeInterval::kInfinite);
+    if (fChildBoundsCache.valid())
+    {
+        bboxValIntrvl =
+            fChildBoundsCache.getValidityInterval();
+    }
+
+    // The computed validity interval must contain the current time.
+    assert(validityInterval.contains(seconds));
+
+    // The current and previous bounding box intervals are either
+    // disjoint or equal.
+    assert(!(fBoundingBoxValidityInterval & bboxValIntrvl).valid() ||
+        fBoundingBoxValidityInterval == bboxValIntrvl);
+
+    if (seconds == (fValidityInterval & bboxValIntrvl).startTime()) {
+        if (fChildBoundsCache.valid())
+        {
+            Alembic::Abc::Box3d abcBbox = fChildBoundsCache.getValue();
+            fBoundingBox = MBoundingBox(MPoint(abcBbox.min.x, abcBbox.min.y, abcBbox.min.z), MPoint(abcBbox.max.x, abcBbox.max.y, abcBbox.max.z));
+        }
+        else
+        {
+            fBoundingBox = bbox;
+        }
+
+        fBoundingBoxValidityInterval = bboxValIntrvl;
+
+        boost::shared_ptr<GPUCache::XformSample> sample =
+            GPUCache::XformSample::create(
+            seconds,
+            fXformCache.getValue(),
+            fBoundingBox,
+            isVisible()
+            );
+        fXformData->addSample(sample);
+    }
+
+    return validityInterval;
+}
+
+TimeInterval AlembicCacheInstancerReader::sampleShape(double seconds)
+{
+    // Transform reader has no shape data!
+    assert(0);
+    return TimeInterval(TimeInterval::kInvalid);
+}
+
+SubNode::MPtr AlembicCacheInstancerReader::get() const
+{
+    SubNode::MPtr node =
+        SubNode::create(MString(fName.c_str()), fXformData);
+
+    return node;
+}
+
+
+void AlembicCacheInstancerReader::fillTopoAndAttrSample(chrono_t time)
+{
+    // Notes:
+    //
+    // When possible, we try to reuse the samples from the previously
+    // read sample.
+
+    // update caches
+    fXformCache.setTime(time);
+    if (fVisibilityCache.valid()) {
+        fVisibilityCache.setTime(time);
+    }
+    if (fChildBoundsCache.valid()) {
+        fChildBoundsCache.setTime(time);
+    }
+
+    // return the new cache valid interval
+    TimeInterval validityInterval(TimeInterval::kInfinite);
+    validityInterval &= fXformCache.getValidityInterval();
+    if (fVisibilityCache.valid()) {
+        validityInterval &= fVisibilityCache.getValidityInterval();
+    }
+    if (fChildBoundsCache.valid()) {
+        validityInterval &= fChildBoundsCache.getValidityInterval();
+    }
+    assert(validityInterval.valid());
+
+    fValidityInterval = validityInterval;
+}
+
+bool AlembicCacheInstancerReader::isVisible() const
+{
+    // xform invisible
+    if (fVisibilityCache.valid() &&
+        fVisibilityCache.getValue() == char(Alembic::AbcGeom::kVisibilityHidden)) {
+        return false;
+    }
+
+    // visible
+    return true;
+}
+
+MBoundingBox AlembicCacheInstancerReader::getBoundingBox() const
+{
+    return fBoundingBox;
+}
+
+TimeInterval AlembicCacheInstancerReader::getBoundingBoxValidityInterval() const
+{
+    return fBoundingBoxValidityInterval;
+}
+
+TimeInterval AlembicCacheInstancerReader::getAnimTimeRange() const
+{
+    return fXformData->animTimeRange();
+}
+
+void AlembicCacheInstancerReader::saveAndReset(AlembicCacheReader& cacheReader)
+{
+ 
 }
 
 

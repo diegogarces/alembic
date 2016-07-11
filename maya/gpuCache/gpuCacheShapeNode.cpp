@@ -1458,12 +1458,22 @@ bool ShapeNode::getInternalValueInContext(const MPlug& plug,
             return false;
         Alembic::Abc::IObject current = fAbcArchive.getTop();
         GetCurrentNode(fCacheGeomPath, current);
+        if (!Alembic::AbcGeom::IXform::matches(current.getHeader()))
+        {
+            // If root is a placeholder (there's not a single root node), use the first child to get the pivot
+            DisplayWarning(kReadPivotsErrorMsg, fCacheFileName, fCacheGeomPath, "There's not a single root node, using the first child to read pivots");
+            current = current.getChild(0);
+        }
         Pivots::Ptr pivots = readPivots(current);
-        if (plug == aRotatePivot)
-            dataHandle.set3Double(pivots->getRotatePivot().x, pivots->getRotatePivot().y, pivots->getRotatePivot().z);
-        else
-            dataHandle.set3Double(pivots->getScalePivot().x, pivots->getScalePivot().y, pivots->getScalePivot().z);
-        return true;
+        if (pivots)
+        {
+            if (plug == aRotatePivot)
+                dataHandle.set3Double(pivots->getRotatePivot().x, pivots->getRotatePivot().y, pivots->getRotatePivot().z);
+            else
+                dataHandle.set3Double(pivots->getScalePivot().x, pivots->getScalePivot().y, pivots->getScalePivot().z);
+            return true;
+        }
+        return false;
     }
 
     return MPxNode::getInternalValueInContext(plug, dataHandle, ctx);

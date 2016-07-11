@@ -136,6 +136,10 @@ MayaInstancerWriter::MayaInstancerWriter(MDagPath & iDag,
         }
     }
 
+    auto userProps = mSchema.getUserProperties();
+    auto instancerProp = Alembic::Abc::OBoolProperty(userProps, "isInstancer");
+    instancerProp.set(true);
+
     // Child bounds
     auto childBoundsProperty = mSchema.getChildBoundsProperty();
     MBoundingBox bbox = fnInstancer.boundingBox(&status);
