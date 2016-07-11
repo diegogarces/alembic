@@ -1143,6 +1143,58 @@ private:
     std::vector<AlembicCacheObjectReader::Ptr> fChildren;
 };
 
+//==============================================================================
+// CLASS AlembicCacheInstancerReader
+//==============================================================================
+
+class AlembicCacheInstancerReader : public AlembicCacheObjectReader
+{
+public:
+    AlembicCacheInstancerReader(Alembic::Abc::IObject object, bool needUVs);
+    ~AlembicCacheInstancerReader();
+
+    virtual bool valid() const;
+    virtual TimeInterval sampleHierarchy(double seconds,
+        const MMatrix& rootMatrix, TimeInterval rootMatrixInterval);
+    virtual TimeInterval sampleShape(double seconds);
+    virtual SubNode::MPtr get() const;
+
+    virtual MBoundingBox getBoundingBox() const;
+    virtual TimeInterval getBoundingBoxValidityInterval() const;
+
+    virtual TimeInterval getAnimTimeRange() const;
+
+    virtual void saveAndReset(AlembicCacheReader& cacheReader);
+
+private:
+
+    void fillTopoAndAttrSample(chrono_t time);
+    bool isVisible() const;
+
+
+    // Alembic readers
+    const std::string                 fName;
+
+    // The valid range of the current data in property caches
+    TimeInterval fValidityInterval;
+
+    // Transform
+    XformPropertyCache fXformCache;
+
+    // Transform Visibility
+    ScalarPropertyCache<Alembic::Abc::ICharProperty>  fVisibilityCache;
+
+    // Transform ChildBounds
+    ScalarPropertyCache<Alembic::Abc::IBox3dProperty>  fChildBoundsCache;
+
+    // Bounding box and its interval
+    MBoundingBox fBoundingBox;
+    TimeInterval fBoundingBoxValidityInterval;
+
+    // The sub node data currently being filled-in.
+    XformData::MPtr fXformData;
+};
+
 
 //==============================================================================
 // CLASS AlembicCacheMeshReader

@@ -144,10 +144,19 @@ private:
                           bool(fIsReflection ^ sample->isReflection()),
                           clippingResult);
 
-        // Recurse into children sub nodes. Expand all instances.
-        BOOST_FOREACH(const SubNode::Ptr& child,
-                      subNode.getChildren() ) {
-            child->accept(traversal);
+        if (subNode.getChildren().empty())
+        {
+            // Transform without children, they are probably deferred, check childBounds to draw a bounding box
+            //MBoundingBox bbox(MPoint(-1.0f, -1.0f, -1.0f), MPoint(1.0f, 1.0f, 1.0f));
+            state().vboProxy().drawBoundingBox(sample->boundingBox(), true);
+        }
+        else
+        {
+            // Recurse into children sub nodes. Expand all instances.
+            BOOST_FOREACH(const SubNode::Ptr& child, subNode.getChildren())
+            {
+                child->accept(traversal);
+            }
         }
     }
         
