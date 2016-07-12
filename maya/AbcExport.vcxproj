@@ -187,7 +187,7 @@ copy O:\$(ProjectName)\$(Platform)\$(Configuration)\$(TargetName).mll $(MAYA_201
     </ClCompile>
     <Link>
       <AdditionalOptions>/subsystem:windows /dll /incremental:yes /debug /export:initializePlugin /export:uninitializePlugin %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>Foundation.lib;OpenMaya.lib;OpenMayaAnim.lib;OpenMayaFX.lib;hdf5d.lib;hdf5_hld.lib;Halfd.lib;Iexd.lib;IlmThreadd.lib;Imathd.lib;zlibd.lib;libszipd.lib;AlembicAbcd.lib;AlembicAbcCollectiond.lib;AlembicAbcCoreAbstractd.lib;AlembicAbcCoreFactoryd.lib;AlembicAbcCoreHDF5d.lib;AlembicAbcCoreOgawad.lib;AlembicAbcOpenGLd.lib;AlembicAbcGeomd.lib;AlembicAbcMateriald.lib;AlembicOgawad.lib;AlembicUtild.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Foundation.lib;OpenMaya.lib;OpenMayaAnim.lib;OpenMayaFX.lib;hdf5d.lib;hdf5_hld.lib;Halfd.lib;Iexd.lib;IlmThreadd.lib;Imathd.lib;zlibd.lib;libszipd.lib;AlembicAbcd.lib;AlembicAbcCollectiond.lib;AlembicAbcCoreAbstractd.lib;AlembicAbcCoreFactoryd.lib;AlembicAbcCoreHDF5d.lib;AlembicAbcCoreOgawad.lib;AlembicAbcGeomd.lib;AlembicAbcMateriald.lib;AlembicOgawad.lib;AlembicUtild.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(MAYA_2015_DEV_USER_PATH)\2015-x64\scripts\ilion_maya_framework\binary_plugins\$(ProjectName)\dev\$(ProjectName).mll</OutputFile>
       <AdditionalLibraryDirectories>$(MAYA_2015_DEV_PATH)\lib;..\Libs\hdf5;..\Libs\IlmBase;..\Libs\zlib;..\Libs\szip;..\Libs\Alembic;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ProgramDatabaseFile>$(OutDir)$(ProjectName).pdb</ProgramDatabaseFile>
@@ -258,7 +258,7 @@ copy O:\$(ProjectName)\$(Platform)\$(Configuration)\$(TargetName).mll $(MAYA_201
     </ClCompile>
     <Link>
       <AdditionalOptions>/subsystem:windows /incremental:no /export:initializePlugin /export:uninitializePlugin %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>Foundation.lib;OpenMaya.lib;OpenMayaAnim.lib;OpenMayaFX.lib;hdf5.lib;hdf5_hl.lib;Half.lib;Iex.lib;IlmThread.lib;Imath.lib;zlib.lib;libszip.lib;AlembicAbc.lib;AlembicAbcCollection.lib;AlembicAbcCoreAbstract.lib;AlembicAbcCoreFactory.lib;AlembicAbcCoreHDF5.lib;AlembicAbcCoreOgawa.lib;AlembicAbcOpenGL.lib;AlembicAbcGeom.lib;AlembicAbcMaterial.lib;AlembicOgawa.lib;AlembicUtil.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Foundation.lib;OpenMaya.lib;OpenMayaAnim.lib;OpenMayaFX.lib;hdf5.lib;hdf5_hl.lib;Half.lib;Iex.lib;IlmThread.lib;Imath.lib;zlib.lib;libszip.lib;AlembicAbc.lib;AlembicAbcCollection.lib;AlembicAbcCoreAbstract.lib;AlembicAbcCoreFactory.lib;AlembicAbcCoreHDF5.lib;AlembicAbcCoreOgawa.lib;AlembicAbcGeom.lib;AlembicAbcMaterial.lib;AlembicOgawa.lib;AlembicUtil.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(MAYA_2015_DEV_USER_PATH)\2015-x64\scripts\ilion_maya_framework\binary_plugins\$(ProjectName)\dev\$(ProjectName).mll</OutputFile>
       <AdditionalLibraryDirectories>$(MAYA_2015_DEV_PATH)\lib;..\Libs\hdf5;..\Libs\IlmBase-1.0.2;..\Libs\zlib;..\Libs\szip;..\Libs\Alembic;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ProgramDatabaseFile>$(OutDir)$(ProjectName).pdb</ProgramDatabaseFile>

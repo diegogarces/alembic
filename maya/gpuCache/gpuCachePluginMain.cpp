@@ -128,7 +128,7 @@ static MStatus registerMStringResources()
 MStatus initializePlugin( MObject obj )
 {
     MStatus   status;
-    MFnPlugin plugin( obj, "Alembic/Ilion", "1.5.7.13", "Any");
+    MFnPlugin plugin( obj, "Alembic/Ilion", "1.6.0.1", "Any");
 
     const MString& drawDbClassification = 
         (Config::vp2OverrideAPI() == Config::kMPxSubSceneOverride) ? 

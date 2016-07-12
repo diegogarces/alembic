@@ -48,7 +48,7 @@ MayaInstancerWriter::MayaInstancerWriter(MDagPath & iDag,
     }
 
     mAttrs = AttributesWriterPtr(new AttributesWriter(cp, up, obj, fnInstancer,
-        iTimeIndex, iArgs));
+        iTimeIndex, iArgs, false));
 
     // Add the main transformation
     if (!iArgs.worldSpace)

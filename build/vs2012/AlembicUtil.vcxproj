@@ -16,6 +16,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\lib\Alembic\Util\All.h" />
+    <ClInclude Include="..\..\lib\Alembic\Util\Config.h" />
     <ClInclude Include="..\..\lib\Alembic\Util\Digest.h" />
     <ClInclude Include="..\..\lib\Alembic\Util\Dimensions.h" />
     <ClInclude Include="..\..\lib\Alembic\Util\Exception.h" />

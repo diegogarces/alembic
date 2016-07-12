@@ -128,13 +128,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\examples\bin\AbcStitcher\AbcStitcher.cpp" />
-    <ClCompile Include="..\..\examples\bin\AbcStitcher\util.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\examples\bin\AbcStitcher\util.h" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="AlembicAbc.vcxproj">
       <Project>{7aaff870-c88a-4115-8a7b-4e7a3aa5ddb3}</Project>
     </ProjectReference>
@@ -168,6 +161,13 @@
     <ProjectReference Include="AlembicZLIB.vcxproj">
       <Project>{f12904ac-09cc-4200-8095-b0c54dc7b0d0}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\bin\AbcStitcher\AbcStitcher.cpp" />
+    <ClCompile Include="..\..\bin\AbcStitcher\util.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\bin\AbcStitcher\util.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

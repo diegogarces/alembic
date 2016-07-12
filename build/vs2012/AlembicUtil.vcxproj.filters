@@ -18,5 +18,6 @@
     <ClInclude Include="..\..\lib\Alembic\Util\PlainOldDataType.h" />
     <ClInclude Include="..\..\lib\Alembic\Util\SpookyV2.h" />
     <ClInclude Include="..\..\lib\Alembic\Util\TokenMap.h" />
+    <ClInclude Include="..\..\lib\Alembic\Util\Config.h" />
   </ItemGroup>
 </Project>

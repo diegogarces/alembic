@@ -128,9 +128,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\examples\bin\AbcConvert\AbcConvert.cpp" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="AlembicAbc.vcxproj">
       <Project>{7aaff870-c88a-4115-8a7b-4e7a3aa5ddb3}</Project>
     </ProjectReference>
@@ -164,6 +161,9 @@
     <ProjectReference Include="AlembicZLIB.vcxproj">
       <Project>{f12904ac-09cc-4200-8095-b0c54dc7b0d0}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\bin\AbcConvert\AbcConvert.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

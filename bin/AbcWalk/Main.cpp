@@ -35,8 +35,8 @@
 //-*****************************************************************************
 
 #include <stdio.h>
-#include <pthread.h>
-#include <sys/time.h>
+//#include <pthread.h>
+//#include <sys/time.h>
 #include <Alembic/Abc/All.h>
 #include <Alembic/AbcCoreFactory/All.h>
 

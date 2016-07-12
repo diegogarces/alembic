@@ -133,6 +133,6 @@
 #include <assert.h>
 
 
-#define ABCEXPORT_VERSION "1.0"
+#define ABCEXPORT_VERSION "1.6.0.1"
 
 #endif  // _AbcExport_Foundation_h_
