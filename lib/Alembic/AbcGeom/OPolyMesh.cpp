@@ -44,110 +44,53 @@ namespace ALEMBIC_VERSION_NS {
 //-*****************************************************************************
 void OPolyMeshSchema::set( const Sample &iSamp )
 {
+	if( m_selectiveExport || iSamp.isPartialSample() )
+	{
+		selectiveSet( iSamp );
+		return;
+	}
+
     ALEMBIC_ABC_SAFE_CALL_BEGIN( "OPolyMeshSchema::set()" );
 
     // do we need to create velocities prop?
     if ( iSamp.getVelocities() && !m_velocitiesProperty )
     {
-        m_velocitiesProperty = Abc::OV3fArrayProperty( this->getPtr(),
-            ".velocities", m_positionsProperty.getTimeSampling() );
-
-        std::vector<V3f> emptyVec;
-        const V3fArraySample empty( emptyVec );
-        const size_t numSamps = m_positionsProperty.getNumSamples();
-        for ( size_t i = 0 ; i < numSamps ; ++i )
-        {
-            m_velocitiesProperty.set( empty );
-        }
+    	createVelocitiesProperty();
     }
 
     // do we need to create uvs?
     if ( iSamp.getUVs() && !m_uvsParam )
     {
-        std::vector<V2f> emptyVals;
-        std::vector<Util::uint32_t> emptyIndices;
-
-        OV2fGeomParam::Sample empty;
-        AbcA::MetaData mdata;
-        SetSourceName( mdata, m_uvSourceName );
-
-        if ( iSamp.getUVs().getIndices() )
-        {
-            empty = OV2fGeomParam::Sample( Abc::V2fArraySample( emptyVals ),
-                Abc::UInt32ArraySample( emptyIndices ),
-                iSamp.getUVs().getScope() );
-
-            // UVs are indexed
-            m_uvsParam = OV2fGeomParam( this->getPtr(), "uv", true,
-                                   empty.getScope(), 1,
-                                   this->getTimeSampling(), mdata );
-        }
-        else
-        {
-            empty = OV2fGeomParam::Sample( Abc::V2fArraySample( emptyVals ),
-                                           iSamp.getUVs().getScope() );
-
-            // UVs are not indexed
-            m_uvsParam = OV2fGeomParam( this->getPtr(), "uv", false,
-                                   empty.getScope(), 1,
-                                   this->getTimeSampling() , mdata );
-        }
-
-        size_t numSamples = m_positionsProperty.getNumSamples();
-
-        // set all the missing samples
-        for ( size_t i = 0; i < numSamples; ++i )
-        {
-            m_uvsParam.set( empty );
-        }
+        createUVsProperty( iSamp );
     }
 
     // do we need to create normals?
     if ( iSamp.getNormals() && !m_normalsParam )
     {
-        std::vector<V3f> emptyVals;
-        std::vector<Util::uint32_t> emptyIndices;
-
-        ON3fGeomParam::Sample empty;
-
-        if ( iSamp.getNormals().getIndices() )
-        {
-            empty = ON3fGeomParam::Sample( Abc::V3fArraySample( emptyVals ),
-                Abc::UInt32ArraySample( emptyIndices ),
-                iSamp.getNormals().getScope() );
-
-            // normals are indexed
-            m_normalsParam = ON3fGeomParam( this->getPtr(), "N", true,
-                empty.getScope(), 1, this->getTimeSampling() );
-        }
-        else
-        {
-            empty = ON3fGeomParam::Sample( Abc::V3fArraySample( emptyVals ),
-                                           iSamp.getNormals().getScope() );
-
-            // normals are not indexed
-            m_normalsParam = ON3fGeomParam( this->getPtr(), "N", false,
-                                        empty.getScope(), 1,
-                                        this->getTimeSampling() );
-        }
-
-        size_t numSamples = m_positionsProperty.getNumSamples();
-
-        // set all the missing samples
-        for ( size_t i = 0; i < numSamples; ++i )
-        {
-            m_normalsParam.set( empty );
-        }
+        createNormalsProperty( iSamp );
     }
 
     // We could add sample integrity checking here.
-    if ( m_positionsProperty.getNumSamples() == 0 )
+    if ( m_numSamples == 0 )
     {
         // First sample must be valid on all points.
         ABCA_ASSERT( iSamp.getPositions() &&
                      iSamp.getFaceIndices() &&
                      iSamp.getFaceCounts(),
                      "Sample 0 must have valid data for all mesh components" );
+
+        AbcA::MetaData mdata;
+        SetGeometryScope( mdata, kVertexScope );
+
+        createSelfBoundsProperty( m_timeSamplingIndex );
+
+        AbcA::CompoundPropertyWriterPtr _this = this->getPtr();
+
+        m_positionsProperty = Abc::OP3fArrayProperty( _this, "P", mdata, m_timeSamplingIndex );
+
+        m_indicesProperty = Abc::OInt32ArrayProperty( _this, ".faceIndices", m_timeSamplingIndex );
+
+        m_countsProperty = Abc::OInt32ArrayProperty( _this, ".faceCounts", m_timeSamplingIndex );
 
         m_positionsProperty.set( iSamp.getPositions() );
         m_indicesProperty.set( iSamp.getFaceIndices() );
@@ -206,7 +149,98 @@ void OPolyMeshSchema::set( const Sample &iSamp )
         if ( m_normalsParam ) { m_normalsParam.set( iSamp.getNormals() ); }
     }
 
+    m_numSamples++;
+
     ALEMBIC_ABC_SAFE_CALL_END();
+}
+
+//-*****************************************************************************
+void OPolyMeshSchema::createVelocitiesProperty()
+{
+	m_velocitiesProperty = Abc::OV3fArrayProperty( this->getPtr(),
+		".velocities", m_timeSamplingIndex );
+
+	std::vector<V3f> emptyVec;
+	const V3fArraySample empty( emptyVec );
+	for ( size_t i = 0 ; i < m_numSamples ; ++i )
+	{
+		m_velocitiesProperty.set( empty );
+	}
+}
+
+//-*****************************************************************************
+void OPolyMeshSchema::createUVsProperty( const Sample &iSamp )
+{
+	std::vector<V2f> emptyVals;
+	std::vector<Util::uint32_t> emptyIndices;
+
+	OV2fGeomParam::Sample empty;
+	AbcA::MetaData mdata;
+	SetSourceName( mdata, m_uvSourceName );
+
+	if ( iSamp.getUVs().getIndices() )
+	{
+		empty = OV2fGeomParam::Sample( Abc::V2fArraySample( emptyVals ),
+			Abc::UInt32ArraySample( emptyIndices ),
+			iSamp.getUVs().getScope() );
+
+		// UVs are indexed
+		m_uvsParam = OV2fGeomParam( this->getPtr(), "uv", true,
+							   empty.getScope(), 1,
+							   m_timeSamplingIndex, mdata );
+	}
+	else
+	{
+		empty = OV2fGeomParam::Sample( Abc::V2fArraySample( emptyVals ),
+									   iSamp.getUVs().getScope() );
+
+		// UVs are not indexed
+		m_uvsParam = OV2fGeomParam( this->getPtr(), "uv", false,
+							   empty.getScope(), 1,
+							   m_timeSamplingIndex , mdata );
+	}
+
+	// set all the missing samples
+	for ( size_t i = 0; i < m_numSamples; ++i )
+	{
+		m_uvsParam.set( empty );
+	}
+}
+
+//-*****************************************************************************
+void OPolyMeshSchema::createNormalsProperty( const Sample &iSamp )
+{
+	std::vector<V3f> emptyVals;
+	std::vector<Util::uint32_t> emptyIndices;
+
+	ON3fGeomParam::Sample empty;
+
+	if ( iSamp.getNormals().getIndices() )
+	{
+		empty = ON3fGeomParam::Sample( Abc::V3fArraySample( emptyVals ),
+			Abc::UInt32ArraySample( emptyIndices ),
+			iSamp.getNormals().getScope() );
+
+		// normals are indexed
+		m_normalsParam = ON3fGeomParam( this->getPtr(), "N", true,
+			empty.getScope(), 1, m_timeSamplingIndex );
+	}
+	else
+	{
+		empty = ON3fGeomParam::Sample( Abc::V3fArraySample( emptyVals ),
+									   iSamp.getNormals().getScope() );
+
+		// normals are not indexed
+		m_normalsParam = ON3fGeomParam( this->getPtr(), "N", false,
+									empty.getScope(), 1,
+									m_timeSamplingIndex );
+	}
+
+	// set all the missing samples
+	for ( size_t i = 0; i < m_numSamples; ++i )
+	{
+		m_normalsParam.set( empty );
+	}
 }
 
 //-*****************************************************************************
@@ -214,11 +248,11 @@ void OPolyMeshSchema::setFromPrevious()
 {
     ALEMBIC_ABC_SAFE_CALL_BEGIN( "OPolyMeshSchema::setFromPrevious" );
 
-    m_positionsProperty.setFromPrevious();
-    m_indicesProperty.setFromPrevious();
-    m_countsProperty.setFromPrevious();
+    if( m_positionsProperty ) m_positionsProperty.setFromPrevious();
+    if( m_indicesProperty ) m_indicesProperty.setFromPrevious();
+    if( m_countsProperty )m_countsProperty.setFromPrevious();
 
-    m_selfBoundsProperty.setFromPrevious();
+    if( m_selfBoundsProperty ) m_selfBoundsProperty.setFromPrevious();
 
     if ( m_velocitiesProperty ) { m_velocitiesProperty.setFromPrevious(); }
     if ( m_uvsParam ) { m_uvsParam.setFromPrevious(); }
@@ -233,10 +267,27 @@ void OPolyMeshSchema::setTimeSampling( uint32_t iIndex )
     ALEMBIC_ABC_SAFE_CALL_BEGIN(
         "OPolyMeshSchema::setTimeSampling( uint32_t )" );
 
-    m_positionsProperty.setTimeSampling( iIndex );
-    m_indicesProperty.setTimeSampling( iIndex );
-    m_countsProperty.setTimeSampling( iIndex );
-    m_selfBoundsProperty.setTimeSampling( iIndex );
+    m_timeSamplingIndex = iIndex;
+
+    if( m_positionsProperty )
+    {
+    	m_positionsProperty.setTimeSampling( iIndex );
+    }
+
+    if( m_indicesProperty )
+    {
+    	m_indicesProperty.setTimeSampling( iIndex );
+    }
+
+    if( m_countsProperty )
+    {
+    	m_countsProperty.setTimeSampling( iIndex );
+    }
+
+    if( m_selfBoundsProperty )
+    {
+    	m_selfBoundsProperty.setTimeSampling( iIndex );
+    }
 
     if ( m_velocitiesProperty )
     {
@@ -276,18 +327,11 @@ void OPolyMeshSchema::init( uint32_t iTsIdx )
 {
     ALEMBIC_ABC_SAFE_CALL_BEGIN( "OPolyMeshSchema::init()" );
 
-    AbcA::MetaData mdata;
-    SetGeometryScope( mdata, kVertexScope );
+    m_selectiveExport = false;
 
-    AbcA::CompoundPropertyWriterPtr _this = this->getPtr();
+    m_numSamples = 0;
 
-    m_positionsProperty = Abc::OP3fArrayProperty( _this, "P", mdata, iTsIdx );
-
-    m_indicesProperty = Abc::OInt32ArrayProperty( _this, ".faceIndices", iTsIdx );
-
-    m_countsProperty = Abc::OInt32ArrayProperty( _this, ".faceCounts", iTsIdx );
-
-    // UVs and Normals are created on first call to set()
+    m_timeSamplingIndex = iTsIdx;
 
     ALEMBIC_ABC_SAFE_CALL_END_RESET();
 }
@@ -359,6 +403,59 @@ OPolyMeshSchema::getFaceSet( const std::string &iFaceSetName )
 void OPolyMeshSchema::setUVSourceName(const std::string & iName)
 {
     m_uvSourceName = iName;
+}
+
+//-*****************************************************************************
+void OPolyMeshSchema::selectiveSet( const Sample &iSamp )
+{
+	ALEMBIC_ABC_SAFE_CALL_BEGIN( "OPolyMeshSchema::selectiveSet()" );
+
+	if( !m_selectiveExport )
+	{
+		m_selectiveExport = true;
+
+		//Delete bounds property since we won't have position samples
+		m_selfBoundsProperty = Abc::OBox3dProperty();
+	}
+
+	//! Velocities
+	if ( iSamp.getVelocities() && !m_velocitiesProperty )
+	{
+		createVelocitiesProperty();
+	}
+
+	if ( m_velocitiesProperty )
+	{
+		SetPropUsePrevIfNull( m_velocitiesProperty, iSamp.getVelocities() );
+	}
+
+	//! UVs
+	if ( iSamp.getUVs().getVals() )
+	{
+		if( !m_uvsParam )
+		{
+			createUVsProperty( iSamp );
+		}
+
+		// OGeomParam will automatically use SetPropUsePrevIfNull internally
+		m_uvsParam.set( iSamp.getUVs() );
+	}
+
+	//! Normals
+	if ( iSamp.getNormals().getVals() )
+	{
+		if( !m_normalsParam  )
+		{
+			createNormalsProperty( iSamp );
+		}
+
+		// OGeomParam will automatically use SetPropUsePrevIfNull internally
+		m_normalsParam.set( iSamp.getNormals() );
+	}
+
+	m_numSamples++;
+
+	ALEMBIC_ABC_SAFE_CALL_END();
 }
 
 } // End namespace ALEMBIC_VERSION_NS

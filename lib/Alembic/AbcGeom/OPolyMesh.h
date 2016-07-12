@@ -128,6 +128,18 @@ public:
             m_normals.reset();
         }
 
+        bool isPartialSample() const
+        {
+        	if( !m_positions.getData() && !m_indices.getData() && !m_counts.getData() )
+        	{
+        		if( m_uvs.getVals() || m_normals.getVals() || m_velocities.getData() )
+        		{
+        			return true;
+        		}
+        	}
+
+        	return false;
+        }
 
     protected:
         Abc::P3fArraySample m_positions;
@@ -174,7 +186,7 @@ public:
                      const Abc::Argument &iArg2 = Abc::Argument() )
       : OGeomBaseSchema<PolyMeshSchemaInfo>(
                                         GetCompoundPropertyWriterPtr( iParent ),
-                                        iName, iArg0, iArg1, iArg2 )
+                                        iName, iArg0, iArg1, iArg2, false )
     {
 
         AbcA::TimeSamplingPtr tsPtr =
@@ -203,7 +215,7 @@ public:
                               const Abc::Argument &iArg2 = Abc::Argument() )
       : OGeomBaseSchema<PolyMeshSchemaInfo>(
                                         GetCompoundPropertyWriterPtr( iParent ),
-                                        iArg0, iArg1, iArg2 )
+                                        iArg0, iArg1, iArg2, false )
     {
 
         AbcA::TimeSamplingPtr tsPtr =
@@ -241,7 +253,16 @@ public:
     //! Return the time sampling type, which is stored on each of the
     //! sub properties.
     AbcA::TimeSamplingPtr getTimeSampling() const
-    { return m_positionsProperty.getTimeSampling(); }
+    {
+    	if( m_positionsProperty.valid() )
+    	{
+    		return m_positionsProperty.getTimeSampling();
+    	}
+    	else
+		{
+			return getObject().getArchive().getTimeSampling( 0 );
+		}
+    }
 
     //-*************************************************************************
     // SAMPLE STUFF
@@ -250,7 +271,7 @@ public:
     //! Get number of samples written so far.
     //! ...
     size_t getNumSamples() const
-    { return m_positionsProperty.getNumSamples(); }
+    { return m_numSamples; }
 
     //! Set a sample! Sample zero has to have non-degenerate
     //! positions, indices and counts.
@@ -289,10 +310,11 @@ public:
     //! valid.
     bool valid() const
     {
-        return ( OGeomBaseSchema<PolyMeshSchemaInfo>::valid() &&
-                 m_positionsProperty.valid() &&
-                 m_indicesProperty.valid() &&
-                 m_countsProperty.valid() );
+        return ( ( OGeomBaseSchema<PolyMeshSchemaInfo>::valid() &&
+                   m_positionsProperty.valid() &&
+                   m_indicesProperty.valid() &&
+                   m_countsProperty.valid() ) ) ||
+                   m_selectiveExport;
     }
 
     // FaceSet stuff
@@ -313,6 +335,11 @@ public:
 protected:
     void init( uint32_t iTsIdx );
 
+    //! Set only some property data. Does not need to be a valid schema sample
+    //! This is to be used when created a file which will be layered in to
+    //! another file.
+    void selectiveSet( const Sample &iSamp );
+
     Abc::OP3fArrayProperty m_positionsProperty;
     Abc::OV3fArrayProperty m_velocitiesProperty;
     Abc::OInt32ArrayProperty m_indicesProperty;
@@ -326,6 +353,21 @@ protected:
 
     // optional source name for the UVs
     std::string m_uvSourceName;
+
+    // Write out only some properties (UVs, normals).
+    // This is to export data to layer into another file later.
+    bool m_selectiveExport;
+
+    // Number of times OPolyMeshSchema::set() has been called
+    size_t m_numSamples;
+
+    uint32_t m_timeSamplingIndex;
+
+    void createVelocitiesProperty();
+
+    void createUVsProperty( const Sample &iSamp );
+
+    void createNormalsProperty( const Sample &iSamp );
 
     // self and child bounds and ArbGeomParams and UserProperties
     // all come from OGeomBaseSchema
