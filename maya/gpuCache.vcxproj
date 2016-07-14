@@ -98,7 +98,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <AdditionalLibraryDirectories>$(MAYA_2015_DEV_PATH)\lib;..\Libs\hdf5;..\Libs\IlmBase;..\Libs\zlib;..\Libs\Alembic;..\Libs\szip;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>OpenMaya.lib;OpenMayaUI.lib;OpenMayaAnim.lib;OpenMayaRender.lib;Foundation.lib;opengl32.lib;AlembicAbcCoreFactoryd.lib;AlembicAbcCoreHDF5d.lib;AlembicAbcCoreOgawad.lib;AlembicAbcGeomd.lib;AlembicAbcd.lib;AlembicAbcCoreAbstractd.lib;AlembicAbcMateriald.lib;AlembicAbcCollectiond.lib;AlembicOgawad.lib;AlembicUtild.lib;hdf5_hld.lib;hdf5d.lib;Iexd.lib;Halfd.lib;Imathd.lib;libzlib.lib;wbemuuid.lib;tbb.lib;libszip.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>OpenMaya.lib;OpenMayaUI.lib;OpenMayaAnim.lib;OpenMayaRender.lib;Foundation.lib;opengl32.lib;AlembicAbcCoreFactoryd.lib;AlembicAbcCoreHDF5d.lib;AlembicAbcCoreOgawad.lib;AlembicAbcCoreLayerd.lib;AlembicAbcGeomd.lib;AlembicAbcd.lib;AlembicAbcCoreAbstractd.lib;AlembicAbcMateriald.lib;AlembicAbcCollectiond.lib;AlembicOgawad.lib;AlembicUtild.lib;hdf5_hld.lib;hdf5d.lib;Iexd.lib;Halfd.lib;Imathd.lib;libzlib.lib;wbemuuid.lib;tbb.lib;libszip.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/export:initializePlugin /export:uninitializePlugin %(AdditionalOptions)</AdditionalOptions>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <ImportLibrary>$(OutDir)$(TargetName).lib</ImportLibrary>
@@ -186,7 +186,7 @@ REM xcopy /y /s "$(ProjectDir)"deploy\mels\*.mel "$(MAYA_2015_DEV_USER_PATH)"\20
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <AdditionalLibraryDirectories>$(MAYA_2015_DEV_PATH)\lib;..\Libs\hdf5;..\Libs\IlmBase-1.0.2;..\Libs\zlib;..\Libs\Alembic;..\Libs\szip;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>OpenMaya.lib;OpenMayaUI.lib;OpenMayaAnim.lib;OpenMayaRender.lib;Foundation.lib;opengl32.lib;AlembicAbcCoreFactory.lib;AlembicAbcCoreHDF5.lib;AlembicAbcCoreOgawa.lib;AlembicAbcGeom.lib;AlembicAbc.lib;AlembicAbcCoreAbstract.lib;AlembicAbcMaterial.lib;AlembicAbcCollection.lib;AlembicOgawa.lib;AlembicUtil.lib;hdf5_hl.lib;hdf5.lib;Iex.lib;Half.lib;Imath.lib;libzlib.lib;wbemuuid.lib;tbb.lib;libszip.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>OpenMaya.lib;OpenMayaUI.lib;OpenMayaAnim.lib;OpenMayaRender.lib;Foundation.lib;opengl32.lib;AlembicAbcCoreFactory.lib;AlembicAbcCoreHDF5.lib;AlembicAbcCoreOgawa.lib;AlembicAbcCoreLayer.lib;AlembicAbcGeom.lib;AlembicAbc.lib;AlembicAbcCoreAbstract.lib;AlembicAbcMaterial.lib;AlembicAbcCollection.lib;AlembicOgawa.lib;AlembicUtil.lib;hdf5_hl.lib;hdf5.lib;Iex.lib;Half.lib;Imath.lib;libzlib.lib;wbemuuid.lib;tbb.lib;libszip.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/export:initializePlugin /export:uninitializePlugin %(AdditionalOptions)</AdditionalOptions>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <ImportLibrary>$(OutDir)$(TargetName).lib</ImportLibrary>

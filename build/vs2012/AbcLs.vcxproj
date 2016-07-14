@@ -143,6 +143,9 @@
     <ProjectReference Include="AlembicAbcCoreHDF5.vcxproj">
       <Project>{419bc782-2b99-4998-a7f2-ca45ff834165}</Project>
     </ProjectReference>
+    <ProjectReference Include="AlembicAbcCoreLayer.vcxproj">
+      <Project>{75c30aba-fddb-4f2c-ba9b-3e64583238ff}</Project>
+    </ProjectReference>
     <ProjectReference Include="AlembicAbcCoreOgawa.vcxproj">
       <Project>{dfdf05f4-214e-4f37-bc58-7776a438a87c}</Project>
     </ProjectReference>
