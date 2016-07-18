@@ -972,7 +972,7 @@ void MayaMeshWriter::writePoly(
     }
 
     Alembic::AbcGeom::OPolyMeshSchema::Sample samp(
-        Alembic::Abc::V3fArraySample((const Imath::V3f *)&points.front(),
+        Alembic::Abc::V3fArraySample(points.size() > 0 ? (const Imath::V3f *)&points.front() : NULL,
             points.size() / 3),
         Alembic::Abc::Int32ArraySample(facePoints),
         Alembic::Abc::Int32ArraySample(pointCounts), iUVs, normalsSamp);
