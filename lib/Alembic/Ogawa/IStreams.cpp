@@ -89,7 +89,16 @@ IStreams::IStreams(const std::string & iFileName, std::size_t iNumStreams) :
 {
 
     std::ifstream * filestream = new std::ifstream;
-    filestream->open(iFileName.c_str(), std::ios::binary);
+    try
+    {
+        filestream->open(iFileName.c_str(), std::ios::binary);
+    }
+    catch (std::ios_base::failure& e)
+    {
+        std::string errorString = e.what();
+        std::cerr << e.what() << '\n';
+    }
+    
 
     if (filestream->is_open())
     {
@@ -97,6 +106,8 @@ IStreams::IStreams(const std::string & iFileName, std::size_t iNumStreams) :
     }
     else
     {
+        const char * errorStr = strerror(errno);
+        std::cerr << errorStr << '\n';
         delete filestream;
         return;
     }

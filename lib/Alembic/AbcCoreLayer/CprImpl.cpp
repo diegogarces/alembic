@@ -117,8 +117,8 @@ CprImpl::getScalarProperty( const std::string &iName )
 {
     ChildNameMap::iterator itr = m_childNameMap.find( iName );
 
-    ABCA_ASSERT( ( itr != m_childNameMap.end() ),
-        "There is no child scalar property with that name");
+    //ABCA_ASSERT( ( itr != m_childNameMap.end() ),
+    //    "There is no child scalar property with that name");
 
     if( itr != m_childNameMap.end() )
     {
