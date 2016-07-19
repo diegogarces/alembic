@@ -50,6 +50,9 @@
 #include <maya/MSyntax.h>
 #include <maya/MTime.h>
 
+#include <functional> 
+#include <cctype>
+
 
 namespace
 {
@@ -151,11 +154,31 @@ void* AbcImport::creator()
     return new AbcImport();
 }
 
+// trim from start (in place)
+static inline void ltrim(std::string &s) {
+    s.erase(s.begin(), std::find_if(s.begin(), s.end(),
+        std::not1(std::ptr_fun<int, int>(std::isspace))));
+}
+
+// trim from end (in place)
+static inline void rtrim(std::string &s) {
+    s.erase(std::find_if(s.rbegin(), s.rend(),
+        std::not1(std::ptr_fun<int, int>(std::isspace))).base(), s.end());
+}
+
+// trim from both ends (in place)
+static inline void trim(std::string &s) {
+    ltrim(s);
+    rtrim(s);
+}
+
 void parseInputFilenames(MString &filenameArg, std::vector<std::string> &filenameList)
 {
    std::istringstream filenameBuffer(filenameArg.asChar());
    std::string thisFilename;
-   while (getline(filenameBuffer, thisFilename, ',')) {
+   while (getline(filenameBuffer, thisFilename, ',')) 
+   {
+       trim(thisFilename);
        filenameList.push_back(thisFilename);
    }
 }

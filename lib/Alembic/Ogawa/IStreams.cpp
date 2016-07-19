@@ -97,6 +97,8 @@ IStreams::IStreams(const std::string & iFileName, std::size_t iNumStreams) :
     }
     else
     {
+        const char * errorStr = strerror(errno);
+        std::cerr << "Failed while trying to open " << iFileName << " : " << errorStr << '\n';
         delete filestream;
         return;
     }
