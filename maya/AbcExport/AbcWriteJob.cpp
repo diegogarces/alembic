@@ -485,23 +485,29 @@ void AbcWriteJob::setup(double iFrame, MayaTransformWriterPtr iParent, GetMember
             // Fix excludeInvisible to false
             bool orig_excludeInvisible = mArgs.excludeInvisible;
             bool orig_writeVisibility = mArgs.writeVisibility;
+            bool oldPropagateChildren = mArgs.propagateChildren;
+            
             mArgs.excludeInvisible = false;
             mArgs.writeVisibility = true;
+            mArgs.propagateChildren = false;
             
             MDagPath instancerDag = mCurDag;
             MayaTransformWriterPtr parent = (foundDag == mExportedDags.end() ? MayaTransformWriterPtr() : foundDag->second.mTransformWriter);
             // Traverse the list exporting all of them, including the instanced dag
+            
             for (auto rit = hierachy.rbegin(); rit != hierachy.rend(); ++rit)
             {
                 mCurDag = (*rit);
                 setup(iFrame, parent, gmMap);
                 parent = mExportedDags.find(mCurDag)->second.mTransformWriter;
             }
+            
             // Restore mCurDag
             mCurDag = instancerDag;
             // Restore excludeInvisible to original value
             mArgs.excludeInvisible = orig_excludeInvisible;
             mArgs.writeVisibility = orig_writeVisibility;
+            mArgs.propagateChildren = oldPropagateChildren;
         }
 
         Alembic::Abc::OObject obj = (iParent == NULL ? mRoot.getTop() : iParent->getObject());
@@ -565,13 +571,16 @@ void AbcWriteJob::setup(double iFrame, MayaTransformWriterPtr iParent, GetMember
 
         // loop through the children, making sure to push and pop them
         // from the MDagPath
-        unsigned int numChild = mCurDag.childCount();
-        for (unsigned int i = 0; i < numChild; ++i)
+        if (mArgs.propagateChildren)
         {
-            if (mCurDag.push(mCurDag.child(i)) == MS::kSuccess)
+            unsigned int numChild = mCurDag.childCount();
+            for (unsigned int i = 0; i < numChild; ++i)
             {
-                setup(iFrame, trans, gmMap);
-                mCurDag.pop();
+                if (mCurDag.push(mCurDag.child(i)) == MS::kSuccess)
+                {
+                    setup(iFrame, trans, gmMap);
+                    mCurDag.pop();
+                }
             }
         }
     }

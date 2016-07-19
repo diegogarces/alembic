@@ -169,6 +169,8 @@ struct JobArgs
         writeFaceSets = false;
         writeUVSets = false;
         autoSubd = false;
+
+        propagateChildren = true;
     }
 
     bool excludeInvisible;
@@ -199,6 +201,8 @@ struct JobArgs
     std::set< std::string > userAttribs;
 
     util::ShapeSet dagPaths;
+
+    bool propagateChildren;
 };
 
 struct FrameRangeArgs
