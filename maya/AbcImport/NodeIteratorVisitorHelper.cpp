@@ -40,7 +40,6 @@
 #include "NodeIteratorVisitorHelper.h"
 
 #include <Alembic/AbcCoreFactory/IFactory.h>
-#include <Alembic/Ogawa/IStreams.h>
 
 #include <maya/MDoubleArray.h>
 #include <maya/MFloatArray.h>
@@ -2866,13 +2865,6 @@ MString createScene(ArgData & iArgData)
     Alembic::Abc::IArchive archive;
     Alembic::AbcCoreFactory::IFactory factory;
     factory.setPolicy(Alembic::Abc::ErrorHandler::kQuietNoopPolicy);
-
-    std::vector<Alembic::Ogawa::IStreams> streams;
-    for (auto it = iArgData.mFileNames.begin(); it != iArgData.mFileNames.end(); ++it)
-    {
-        new Alembic::Ogawa::IStreams(*it, 1);
-    }
-
 
     archive = factory.getArchive(iArgData.mFileNames);
 
