@@ -96,11 +96,14 @@ ELSE()
               ${INCLUDE_PATHS}
               DOC "The directory where PyImath.h resides")
 
+    message("DGC: Let's try to find PyImath library = ${ALEMBIC_PYILMBASE_PYIMATH_LIB}")
     IF(NOT DEFINED ALEMBIC_PYILMBASE_PYIMATH_LIB)
+        message("DGC: Not defined yet")
         FIND_LIBRARY(ALEMBIC_PYILMBASE_PYIMATH_LIB PyImath
                      PATHS
                      ${LIBRARY_PATHS}
                      DOC "The PyImath library")
+        message("DGC: result of finding pyilmbase lib = ${ALEMBIC_PYILMBASE_PYIMATH_LIB}")
     ENDIF()
 
     SET(PYILMBASE_FOUND TRUE)
@@ -115,7 +118,7 @@ ELSE()
         SET(PYILMBASE_FOUND FALSE)
     ENDIF()
 
-    FIND_PATH(ALEMBIC_PYIMATH_MODULE_DIRECTORY imathmodule.so
+    FIND_PATH(ALEMBIC_PYIMATH_MODULE_DIRECTORY imath.pyd
         PATHS
         ${LIBRARY_PATHS}
         /usr/local/lib/python${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}/site-packages
